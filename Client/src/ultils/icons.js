@@ -37,7 +37,7 @@ import {
 import { ImBin } from "react-icons/im";
 import { RiLogoutCircleRLine, RiProductHuntLine } from "react-icons/ri";
 import { FaCartArrowDown } from "react-icons/fa6";
-
+import { TbCircleNumber1Filled ,TbCircleNumber2Filled ,TbCircleNumber3Filled } from "react-icons/tb";
 const icons = {
   HiPhone,
   MdEmail,
@@ -76,6 +76,9 @@ const icons = {
   MdClose,
   FaUserEdit,
   FaSearch,
+  TbCircleNumber1Filled,
+  TbCircleNumber2Filled,
+  TbCircleNumber3Filled
 };
 
 export default icons;

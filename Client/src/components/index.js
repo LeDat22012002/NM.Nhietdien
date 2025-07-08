@@ -6,3 +6,5 @@ export { default as InputField } from "./Inputs/InputField";
 
 // Button
 export { default as Button } from "./Button/Button";
+
+export {default as MenuItem} from "./MenuItem/menuItem"

@@ -5,22 +5,24 @@ import clsx from "clsx";
 import path from "../../ultils/path";
 const Layout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const curentUser = JSON.parse(localStorage.getItem("userInfo"));
-  if (!curentUser) {
-    return <Navigate to={`${path.LOGIN}`} replace={true}></Navigate>;
-  }
+  const [currentNav, setCurrentNav] = useState("");
+  // const curentUser = JSON.parse(localStorage.getItem("userInfo"));
+  // if (!curentUser) {
+  //   return <Navigate to={`${path.LOGIN}`} replace={true}></Navigate>;
+  // }
   return (
     <div className="flex w-full h-screen text-gray-900">
       {/* === SIDEBAR === */}
       <div
         className={clsx(
           "fixed top-0 left-0 bottom-0 z-50 bg-white border-r border-gray-200 transition-all duration-300",
-          isSidebarOpen ? "w-[240px]" : "w-[60px]"
+          isSidebarOpen ? "w-[260px]" : "w-[60px]"
         )}
       >
         <Sidebar
           isMini={!isSidebarOpen}
           onExpand={() => setIsSidebarOpen(true)}
+          currentNav={currentNav}
         />
       </div>
 
@@ -33,13 +35,16 @@ const Layout = () => {
       >
         {/* === HEADER CỐ ĐỊNH === */}
         <div
-          className="fixed top-0 right-0 z-40 h-[50px] bg-cyan-600 flex items-center px-4 shadow transition-all duration-300"
+          className="fixed top-0 right-0 z-40 h-[50px]  flex items-center px-4 shadow transition-all duration-300"
           style={{
-            left: isSidebarOpen ? "240px" : "60px",
-            width: `calc(100% - ${isSidebarOpen ? "240px" : "60px"})`,
+            left: isSidebarOpen ? "260px" : "60px",
+            width: `calc(100% - ${isSidebarOpen ? "260px" : "60px"})`,
           }}
         >
-          <Header onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)} />
+          <Header 
+          onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
+          setCurrentNav={setCurrentNav}
+           />
         </div>
 
         {/* === SPACER ĐẨY OUTLET XUỐNG DƯỚI HEADER === */}

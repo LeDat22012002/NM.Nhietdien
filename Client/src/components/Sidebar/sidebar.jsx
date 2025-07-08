@@ -1,22 +1,28 @@
-import { Fragment, useState } from "react";
+import { Fragment, memo, useMemo, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { adminSidebar } from "../../ultils/contain";
+import { adminSidebar, NHLBSidebar , TBMPSidebar } from "../../ultils/contain";
 import clsx from "clsx";
 import icons from "../../ultils/icons";
 import logo from "../../assets/image/Logo.png";
 const { FaSortDown, FaCaretRight } = icons;
 
-const Sidebar = ({ isMini, onExpand }) => {
+const Sidebar = ({ isMini, onExpand, currentNav }) => {
   const current = JSON.parse(localStorage.getItem("userInfo"));
-  const sidebarItems = adminSidebar(current);
+
+  
+  const sidebarItems = useMemo(() => {
+    if (currentNav === "X.nồi hơi lọc bụi") return NHLBSidebar();
+    if (currentNav === "X.Tuabin,máy phát") return TBMPSidebar();
+    return adminSidebar(current);
+  }, [currentNav]);
+
   const [actived, setActived] = useState([]);
   const [activeSubmenu, setActiveSubmenu] = useState(null);
+
   const handleShowTabs = (tabID) => {
-    if (actived.includes(tabID)) {
-      setActived((prev) => prev.filter((el) => el !== tabID));
-    } else {
-      setActived((prev) => [...prev, tabID]);
-    }
+    setActived((prev) =>
+      prev.includes(tabID) ? prev.filter((el) => el !== tabID) : [...prev, tabID]
+    );
   };
 
   const ActiveStyle = "bg-gray-200 text-blue-600 no-underline";
@@ -25,18 +31,9 @@ const Sidebar = ({ isMini, onExpand }) => {
   return (
     <div className="flex flex-col h-screen overflow-y-auto bg-white border-r border-gray-200">
       {/* Logo */}
-      <div
-        className={clsx(
-          "flex items-center justify-center ",
-          isMini ? "h-[100px]" : "h-[100px]"
-        )}
-      >
+      <div className={clsx("flex items-center justify-center", "h-[100px]")}>
         {!isMini && (
-          <img
-            src={logo}
-            alt="logo"
-            className="w-[180px] object-contain pb-[50px]"
-          />
+          <img src={logo} alt="logo" className="w-[180px] object-contain pb-[50px]" />
         )}
       </div>
 
@@ -51,10 +48,9 @@ const Sidebar = ({ isMini, onExpand }) => {
                 onClick={() => isMini && onExpand()}
                 className={({ isActive }) =>
                   clsx(
-                    "flex items-center py-3 transition-all no-underline ",
+                    "flex items-center py-3 transition-all no-underline",
                     isMini ? "justify-center px-0" : "gap-2 px-4",
-                    isActive && ActiveStyle,
-                    !isActive && NotActiveStyle
+                    isActive ? ActiveStyle : NotActiveStyle
                   )
                 }
               >
@@ -67,17 +63,14 @@ const Sidebar = ({ isMini, onExpand }) => {
             {el.type === "PARENT" && (
               <div
                 onClick={() => {
-                  if (isMini) {
-                    onExpand();
-                  } else {
-                    handleShowTabs(+el.id);
-                  }
+                  if (isMini) onExpand();
+                  else handleShowTabs(+el.id);
                 }}
                 className="transition-all cursor-pointer"
               >
                 <div
                   className={clsx(
-                    "flex items-center py-3 hover:bg-gray-100 ",
+                    "flex items-center py-3 hover:bg-gray-100",
                     isMini ? "justify-center px-0" : "justify-between px-4"
                   )}
                 >
@@ -99,12 +92,11 @@ const Sidebar = ({ isMini, onExpand }) => {
                 </div>
 
                 {!isMini && actived.includes(el.id) && (
-                  <div className="flex flex-col ">
+                  <div className="flex flex-col">
                     {el.submenu.map((item, idx) => (
                       <div key={idx}>
                         {"children" in item ? (
-                          <div className="flex flex-col">
-                            {/* Click để mở submenu cấp 3 */}
+                          <>
                             <div
                               onClick={(e) => {
                                 e.stopPropagation();
@@ -115,10 +107,9 @@ const Sidebar = ({ isMini, onExpand }) => {
                               className="flex items-center justify-between py-2 text-sm text-gray-700 cursor-pointer hover:text-blue-500 hover:bg-gray-100"
                             >
                               <div className="flex gap-1 pl-6">
-                                <span className="">{item.icon}</span>
-                                <span className="">{item.text}</span>
+                                <span>{item.icon}</span>
+                                <span>{item.text}</span>
                               </div>
-
                               <span className="mr-[15px]">
                                 {activeSubmenu === idx ? (
                                   <FaCaretRight size={16} />
@@ -128,9 +119,8 @@ const Sidebar = ({ isMini, onExpand }) => {
                               </span>
                             </div>
 
-                            {/* Submenu cấp 3 */}
                             {activeSubmenu === idx && (
-                              <div className="flex flex-col ">
+                              <div className="flex flex-col">
                                 {item.children.map((child) => (
                                   <NavLink
                                     key={child.text}
@@ -138,22 +128,22 @@ const Sidebar = ({ isMini, onExpand }) => {
                                     onClick={(e) => e.stopPropagation()}
                                     className={({ isActive }) =>
                                       clsx(
-                                        "py-2 text-sm no-underline ",
+                                        "py-2 text-sm no-underline",
                                         isActive
-                                          ? "text-blue-600 font-medium bg-gray-200 "
-                                          : " hover:bg-gray-100 hover:text-blue-500"
+                                          ? "text-blue-600 font-medium bg-gray-200"
+                                          : "hover:bg-gray-100 hover:text-blue-500"
                                       )
                                     }
                                   >
                                     <div className="flex gap-1 pl-7">
                                       <span>{child?.icon}</span>
-                                      <span className="">{child.text}</span>
+                                      <span>{child.text}</span>
                                     </div>
                                   </NavLink>
                                 ))}
                               </div>
                             )}
-                          </div>
+                          </>
                         ) : (
                           <NavLink
                             to={item.path}
@@ -162,7 +152,7 @@ const Sidebar = ({ isMini, onExpand }) => {
                               clsx(
                                 "py-2 text-sm no-underline flex flex-col",
                                 isActive
-                                  ? "text-blue-600 font-medium bg-gray-200 "
+                                  ? "text-blue-600 font-medium bg-gray-200"
                                   : "text-gray-700 hover:text-blue-500 hover:bg-gray-100"
                               )
                             }
@@ -183,4 +173,4 @@ const Sidebar = ({ isMini, onExpand }) => {
   );
 };
 
-export default Sidebar;
+export default memo(Sidebar);
