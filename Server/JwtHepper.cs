@@ -5,12 +5,12 @@ using System.Text;
 
 public static class JwtHelper
 {
-    public static string GenerateToken(string manv, string role, string secretKey, string issuer, int minutes = 30)
+    public static string GenerateToken(string manv, int role, string secretKey, string issuer, int minutes = 30)
     {
         var claims = new[]
         {
             new Claim(ClaimTypes.Name, manv),
-            new Claim(ClaimTypes.Role, role)
+             new Claim(ClaimTypes.Role, role.ToString())
         };
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));

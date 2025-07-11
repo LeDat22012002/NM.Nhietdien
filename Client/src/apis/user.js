@@ -1,25 +1,31 @@
-import axios from "../../axois";
+import axios from '../../axois';
 
 export const apiRegister = (data) =>
   axios({
-    url: "/auth/register",
-    method: "post",
+    url: '/user/register',
+    method: 'post',
     data,
   });
 
 export const apiLogin = (data) =>
   axios({
-    url: "/auth/login",
-    method: "post",
+    url: '/user/login',
+    method: 'post',
     data,
   });
 
 export const apiLogout = (refreshToken) =>
   axios({
-    url: "/auth/logout",
-    method: "post",
+    url: '/user/logout',
+    method: 'post',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
-    data: JSON.stringify(refreshToken),
+    data: { refreshToken },
+  });
+
+export const apigetAllUser = () =>
+  axios({
+    url: '/user/allusers',
+    method: 'get',
   });

@@ -1,43 +1,98 @@
-import { useEffect, useState } from "react";
-import moment from "moment";
-import { apigetAllTuabin1 } from "../../../apis";
-import logo from "../../../assets/image/Logo.png";
+import { useEffect, useState } from 'react';
+import moment from 'moment';
+import { apiExportExcelTB3, apigetDataTB3 } from '../../../apis';
+import logo from '../../../assets/image/Logo.png';
+import { FilterTime } from '../../../components';
+import { toast } from 'react-toastify';
 
 const BM_11_QT_05_08 = () => {
   const [data1, setData1] = useState(null);
 
-  const fetchDataBM_1 = async () => {
-    const reponse = await apigetAllTuabin1();
-
-    if (reponse.status) {
+  const [begind, setBegind] = useState('');
+  const [endd, setEndd] = useState('');
+  const fetchDataBM3 = async () => {
+    const reponse = await apigetDataTB3(begind, endd, 'asc');
+    // console.log('đtststs', reponse);
+    if (reponse?.status) {
       const data1 = reponse?.data;
+
       const grouped = {};
+
       data1.forEach((item) => {
-        const hourKey = moment(item?.thoiGian).format("YYYY-MM-DD HH:00");
-        if (!grouped[hourKey]) {
-          grouped[hourKey] = { thoiGian: hourKey };
-        }
-        // Gán thêm key là tagname và value vào {} con của grouped
-        grouped[hourKey][item?.tagName] = item?.value;
+        const minuteKey = moment(item.time).format('YYYY-MM-DD HH:mm');
+
+        // Gán bản ghi mới nếu chưa có giờ đó
+        grouped[minuteKey] = item; // mỗi giờ sẽ giữ bản ghi cuối cùng (do đang duyệt theo asc)
       });
-      // chuyển sang thành mảng gồm các value
-      const result = Object.values(grouped);
+
+      // Chuyển object về mảng
+      const result = Object.entries(grouped).map(([time, value]) => ({
+        thoiGian: time,
+        ...value,
+      }));
+
       setData1(result);
     }
   };
   // lấy ra các Tagname là duy nhất
-  const uniqueTagNames = [
-    ...new Set(
-      data1?.flatMap((item) =>
-        Object.keys(item).filter((key) => key !== "thoiGian")
-      )
-    ),
-  ];
+  const uniqueTagNames = Object.keys(data1?.[0] || {}).filter((key) =>
+    key.startsWith('tag')
+  );
   useEffect(() => {
-    fetchDataBM_1();
+    fetchDataBM3();
   }, []);
+
+  const handleTG = (begindValue, enddValue) => {
+    setBegind(begindValue);
+    setEndd(enddValue);
+    fetchDataBM3(begindValue, enddValue);
+  };
+
+  const handleExportExcel = async () => {
+    if (!begind || !endd) {
+      toast.warning('Thiếu thời gian!');
+      return;
+    }
+
+    try {
+      const response = await apiExportExcelTB3(begind, endd);
+
+      //  Đảm bảo response và headers tồn tại
+      if (!response || !response.data) {
+        throw new Error('Không nhận được dữ liệu từ server.');
+      }
+
+      const blob = new Blob([response.data], {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      });
+
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+
+      //  Kiểm tra header tồn tại trước khi đọc
+      let fileName = 'BM3_Export.xlsx';
+      if (response.headers && response.headers['content-disposition']) {
+        const match =
+          response.headers['content-disposition'].match(/filename="?(.+?)"?$/);
+        if (match && match[1]) {
+          fileName = decodeURIComponent(match[1]);
+        }
+      }
+
+      link.href = url;
+      link.setAttribute('download', fileName);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Lỗi Xuất Excel:', error);
+      toast.error('Không xuất được file!');
+    }
+  };
+
   return (
-    <div className="space-y-4 ">
+    <div className="w-full space-y-4">
       <div className="flex items-center justify-between w-full">
         <div className="flex flex-col">
           <img src={logo} alt="logo" className="w-[200px] object-cover"></img>
@@ -47,52 +102,16 @@ const BM_11_QT_05_08 = () => {
           </div>
         </div>
         <div>
-          <button className="px-4 py-2 text-sm font-semibold text-white transition bg-green-600 rounded hover:bg-green-700">
+          <button
+            className="px-4 py-2 text-sm font-semibold text-white transition bg-green-600 rounded hover:bg-green-700"
+            onClick={handleExportExcel}
+          >
             Xuất Excel
           </button>
         </div>
       </div>
-      <div className="flex gap-4   h-[50px] items-center justify-center">
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-1">
-            <label className="text-sm font-medium text-gray-700">Từ</label>
-            <div className="flex items-center space-x-2">
-              {/* Chọn ngày */}
-              <input
-                type="date"
-                className="px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none "
-              />
-
-              {/* Chọn giờ */}
-              <input
-                type="time"
-                className="px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-          </div>
-          <div className="flex items-center gap-1">
-            <label className="text-sm font-medium text-gray-700">Đến</label>
-            <div className="flex items-center space-x-2">
-              {/* Chọn ngày */}
-              <input
-                type="date"
-                className="px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none "
-              />
-
-              {/* Chọn giờ */}
-              <input
-                type="time"
-                className="px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-          </div>
-        </div>
-
-        <div className="flex items-center justify-center">
-          <button className="px-3 py-2 text-xs font-medium text-white bg-red-500 rounded hover:bg-red-600">
-            Tìm kiếm
-          </button>
-        </div>
+      <div>
+        <FilterTime callBackHandle={handleTG} />
       </div>
       <div className="text-center">
         <h2 className="text-lg font-bold">
@@ -100,11 +119,11 @@ const BM_11_QT_05_08 = () => {
         </h2>
       </div>
       <div className="max-w-full overflow-x-auto overflow-y-auto border border-gray-300 rounded scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
-        <div className="w-[1000px] h-[400px]">
+        <div className="w-[1000px] h-[600px]">
           <table className="border border-collapse border-gray-400 ">
             <colgroup>
               {Array.from({ length: 55 }).map((_, i) => (
-                <col key={i} style={{ width: "20px" }} />
+                <col key={i} style={{ width: '20px' }} />
               ))}
             </colgroup>
             <thead className="text-sm text-gray-700 border border-gray-700">
@@ -195,312 +214,312 @@ const BM_11_QT_05_08 = () => {
                   Quạt số
                 </th>
               </tr>
-              <tr>
+              <tr className="text-black">
                 <th
                   colSpan={1}
                   className="py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold  text-center border border-gray-700"
                 >
-                  Tiêu đề lớn1 - chiếm 1 cột
+                  I động cơ
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700"
                 >
-                  Tiêu đề lớn1 - chiếm 1 cột
+                  Tº gối trước động cơ
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700"
                 >
-                  Tiêu đề lớn1 - chiếm 1 cột
+                  Tº gối sau động cơ
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700"
                 >
-                  Tiêu đề lớn1 - chiếm 1 cột
+                  Tº gối trước bơm
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700"
                 >
-                  Tiêu đề lớn1 - chiếm 1 cột
+                  Tº gối sau bơm
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700"
                 >
-                  Tiêu đề lớn1 - chiếm 1 cột
+                  Tº dầu làm mát gối trục
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700"
                 >
-                  Tiêu đề lớn1 - chiếm 1 cột
+                  P dầu làm mát gối trục
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700"
                 >
-                  Tiêu đề lớn1 - chiếm 1 cột
+                  Độ rung ổ trục trước max
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700"
                 >
-                  Tiêu đề lớn1 - chiếm 1 cột
+                  Độ rung ổ trục sau max
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700"
                 >
-                  Tiêu đề lớn1 - chiếm 1 cột
+                  Tº cuộn dây max 1
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700"
                 >
-                  Tiêu đề lớn1 - chiếm 1 cột
+                  Tº cuộn dây max 2
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700"
                 >
-                  Tiêu đề lớn1 - chiếm 1 cột
+                  Mức dầu
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700"
                 >
-                  Tiêu đề lớn1 - chiếm 1 cột
+                  I động cơ
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700"
                 >
-                  Tiêu đề lớn1 - chiếm 1 cột
+                  Tº gối trước động cơ
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700"
                 >
-                  Tiêu đề lớn1 - chiếm 1 cột
+                  Tº gối sau động cơ
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700"
                 >
-                  Tiêu đề lớn1 - chiếm 1 cột
+                  Tº gối trước bơm
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700"
                 >
-                  Tiêu đề lớn1 - chiếm 1 cột
+                  Tº gối sau bơm
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700"
                 >
-                  Tiêu đề lớn1 - chiếm 1 cột
+                  Tº dầu làm mát gối trục
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700"
                 >
-                  Tiêu đề lớn1 - chiếm 1 cột
+                  P dầu làm mát gối trục
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700"
                 >
-                  Tiêu đề lớn1 - chiếm 1 cột
+                  Độ rung ổ trục trước max
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
                 >
-                  Tiêu đề lớn1 - chiếm 1 cột
+                  Độ rung ổ trục sau max
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
                 >
-                  Tiêu đề lớn1 - chiếm 1 cột
+                  Tº cuộn dây max 1
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
                 >
-                  Tiêu đề lớn1 - chiếm 1 cột
+                  Tº cuộn dây max2
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
                 >
-                  Tiêu đề lớn1 - chiếm 1 cột
+                  Mức dầu
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
                 >
-                  Tiêu đề lớn1 - chiếm 1 cột
+                  Nhiệt độ
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
                 >
-                  Tiêu đề lớn1 - chiếm 1 cột
+                  Mức nước
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
                 >
-                  Tiêu đề lớn1 - chiếm 1 cột
+                  Áp suất
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
                 >
-                  Tiêu đề lớn1 - chiếm 1 cột
+                  I động cơ
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
                 >
-                  Tiêu đề lớn1 - chiếm 1 cột
+                  Tº gối động cơ trước
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
                 >
-                  Tiêu đề lớn1 - chiếm 1 cột
+                  Tº gối động cơ sau
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
                 >
-                  Tiêu đề lớn1 - chiếm 1 cột
+                  Tº cuộn dây max
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
                 >
-                  Tiêu đề lớn1 - chiếm 1 cột
+                  I động cơ
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
                 >
-                  Tiêu đề lớn1 - chiếm 1 cột
+                  Tº gối động cơ trước
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
                 >
-                  Tiêu đề lớn1 - chiếm 1 cột
+                  Tº gối động cơ sau
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
                 >
-                  Tiêu đề lớn1 - chiếm 1 cột
+                  Tº cuộn dây max
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
                 >
-                  Tiêu đề lớn1 - chiếm 1 cột
+                  I động cơ
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
                 >
-                  Tiêu đề lớn1 - chiếm 1 cột
+                  Tº gối động cơ trước
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
                 >
-                  Tiêu đề lớn1 - chiếm 1 cột
+                  Tº gối động cơ sau
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
                 >
-                  Tiêu đề lớn1 - chiếm 1 cột
+                  Tº cuộn dây max
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
                 >
-                  Tiêu đề lớn1 - chiếm 1 cột
+                  Dòng điện
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
                 >
-                  Tiêu đề lớn1 - chiếm 1 cột
+                  Độ rung
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
                 >
-                  Tiêu đề lớn1 - chiếm 1 cột
+                  Tº dầu hộp giảm tốc
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
                 >
-                  Tiêu đề lớn1 - chiếm 1 cột
+                  L dầu hộp giảm tốc
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
                 >
-                  Tiêu đề lớn1 - chiếm 1 cột
+                  Dòng điện
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
                 >
-                  Tiêu đề lớn1 - chiếm 1 cột
+                  Độ rung
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
                 >
-                  Tiêu đề lớn1 - chiếm 1 cột
+                  Tº dầu hộp giảm tốc
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
                 >
-                  Tiêu đề lớn1 - chiếm 1 cột
+                  L dầu hộp giảm tốc
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
                 >
-                  Tiêu đề lớn1 - chiếm 1 cột
+                  Dòng điện
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
                 >
-                  Tiêu đề lớn1 - chiếm 1 cột
+                  Độ rung
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
                 >
-                  Tiêu đề lớn1 - chiếm 1 cột
+                  Tº dầu hộp giảm tốc
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
                 >
-                  Tiêu đề lớn1 - chiếm 1 cột
+                  L dầu hộp giảm tốc
                 </th>
               </tr>
               <tr>
@@ -508,323 +527,323 @@ const BM_11_QT_05_08 = () => {
                   colSpan={4}
                   className=" py-2 px-2 text-[10px] text-center border border-gray-700 "
                 >
-                  a
+                  h
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
                 >
-                  a
+                  A
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
                 >
-                  a
+                  ºC
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
                 >
-                  a
+                  ºC
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
                 >
-                  a
+                  ºC
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
                 >
-                  a
+                  ºC
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
                 >
-                  a
+                  ºC
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
                 >
-                  a
+                  MPa
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
                 >
-                  a
+                  mm/s
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
                 >
-                  a
+                  mm/s
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
                 >
-                  a
+                  ºC
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
                 >
-                  a
+                  ºC
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
                 >
-                  a
+                  mm
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
                 >
-                  a
+                  A
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
                 >
-                  a
+                  ºC
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
                 >
-                  a
+                  ºC
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
                 >
-                  a
+                  ºC
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
                 >
-                  a
+                  ºC
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
                 >
-                  a
+                  ºC
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
                 >
-                  a
+                  MPa
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
                 >
-                  a
+                  mm/s
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
                 >
-                  a
+                  mm/s
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
                 >
-                  a
+                  ºC
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
                 >
-                  a
+                  ºC
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
                 >
-                  a
+                  mm
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
                 >
-                  a
+                  ºC
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
                 >
-                  a
+                  mm
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
                 >
-                  a
+                  MPa
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
                 >
-                  a
+                  A
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
                 >
-                  a
+                  ºC
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
                 >
-                  a
+                  ºC
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
                 >
-                  a
+                  ºC
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
                 >
-                  a
+                  A
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
                 >
-                  a
+                  ºC
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
                 >
-                  a
+                  ºC
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
                 >
-                  a
+                  ºC
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
                 >
-                  a
+                  A
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
                 >
-                  a
+                  ºC
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
                 >
-                  a
+                  ºC
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
                 >
-                  a
+                  ºC
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
                 >
-                  a
+                  A
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
                 >
-                  a
+                  mm/s
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
                 >
-                  a
+                  ºC
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
                 >
-                  a
-                </th>
-
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  a
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  a
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  a
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  a
+                  mm
                 </th>
 
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
                 >
-                  a
+                  A
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
                 >
-                  a
+                  mm/s
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
                 >
-                  a
+                  ºC
                 </th>
                 <th
                   colSpan={1}
                   className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
                 >
-                  a
+                  mm
+                </th>
+
+                <th
+                  colSpan={1}
+                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
+                >
+                  A
+                </th>
+                <th
+                  colSpan={1}
+                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
+                >
+                  mm/s
+                </th>
+                <th
+                  colSpan={1}
+                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
+                >
+                  ºC
+                </th>
+                <th
+                  colSpan={1}
+                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
+                >
+                  mm
                 </th>
               </tr>
-              <tr>
+              <tr className="hidden">
                 <th
                   colSpan={4}
                   className="py-2 px-2 text-[10px] text-center border border-gray-700"
                 >
-                  TT
+                  h
                 </th>
                 {uniqueTagNames?.map((item, index) => (
                   <th
@@ -844,12 +863,12 @@ const BM_11_QT_05_08 = () => {
                     colSpan={4}
                     className="border text-[10px] text-center font-bold border-gray-700"
                   >
-                    {moment(row?.thoiGian).format("HH:mm")}
+                    {moment(row?.thoiGian).format('HH:mm')}
                   </td>
                   {uniqueTagNames?.map((tagname) => (
                     <td
                       key={tagname}
-                      className="border text-[10px] text-center border-gray-700"
+                      className="border text-black px-4 text-[10px] text-center border-gray-700"
                     >
                       {row[tagname]}
                     </td>

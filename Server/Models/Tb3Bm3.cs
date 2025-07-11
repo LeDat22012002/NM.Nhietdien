@@ -1,0 +1,165 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace Server.Models;
+
+public partial class Tb3Bm3
+{
+    public int Id { get; set; }
+
+    public DateTime? Time { get; set; }
+
+    public double? Tag1 { get; set; }
+
+    public double? Tag2 { get; set; }
+
+    public double? Tag3 { get; set; }
+
+    public double? Tag4 { get; set; }
+
+    public double? Tag5 { get; set; }
+
+    public double? Tag6 { get; set; }
+
+    public double? Tag7 { get; set; }
+
+    public double? Tag8 { get; set; }
+
+    public double? Tag9 { get; set; }
+
+    public double? Tag10 { get; set; }
+
+    public double? Tag11 { get; set; }
+
+    public double? Tag12 { get; set; }
+
+    public double? Tag13 { get; set; }
+
+    public double? Tag14 { get; set; }
+
+    public double? Tag15 { get; set; }
+
+    public double? Tag16 { get; set; }
+
+    public double? Tag17 { get; set; }
+
+    public double? Tag18 { get; set; }
+
+    public double? Tag19 { get; set; }
+
+    public double? Tag20 { get; set; }
+
+    public double? Tag21 { get; set; }
+
+    public double? Tag22 { get; set; }
+
+    public double? Tag23 { get; set; }
+
+    public double? Tag24 { get; set; }
+
+    public double? Tag25 { get; set; }
+
+    public double? Tag26 { get; set; }
+
+    public double? Tag27 { get; set; }
+
+    public double? Tag28 { get; set; }
+
+    public double? Tag29 { get; set; }
+
+    public double? Tag30 { get; set; }
+
+    public double? Tag31 { get; set; }
+
+    public double? Tag32 { get; set; }
+
+    public double? Tag33 { get; set; }
+
+    public double? Tag34 { get; set; }
+
+    public double? Tag35 { get; set; }
+
+    public double? Tag36 { get; set; }
+
+    public double? Tag37 { get; set; }
+
+    public double? Tag38 { get; set; }
+
+    public double? Tag39 { get; set; }
+
+    public double? Tag40 { get; set; }
+
+    public double? Tag41 { get; set; }
+
+    public double? Tag42 { get; set; }
+
+    public double? Tag43 { get; set; }
+
+    public double? Tag44 { get; set; }
+
+    public double? Tag45 { get; set; }
+
+    public double? Tag46 { get; set; }
+
+    public double? Tag47 { get; set; }
+
+    public double? Tag48 { get; set; }
+
+    public double? Tag49 { get; set; }
+
+    public double? Tag50 { get; set; }
+
+    public double? Tag51 { get; set; }
+
+    public double? Tag52 { get; set; }
+
+    public double? Tag53 { get; set; }
+
+    public double? Tag54 { get; set; }
+
+    public double? Tag55 { get; set; }
+
+    public double? Tag56 { get; set; }
+
+    public double? Tag57 { get; set; }
+
+    public double? Tag58 { get; set; }
+
+    public double? Tag59 { get; set; }
+
+    public double? Tag60 { get; set; }
+
+    public double? Tag61 { get; set; }
+
+    public double? Tag62 { get; set; }
+
+    public double? Tag63 { get; set; }
+
+    public double? Tag64 { get; set; }
+
+    public double? Tag65 { get; set; }
+
+    public double? Tag66 { get; set; }
+
+    public double? Tag67 { get; set; }
+
+    public double? Tag68 { get; set; }
+
+    public double? Tag69 { get; set; }
+
+    public double? Tag70 { get; set; }
+
+    public double? Tag71 { get; set; }
+
+    public double? Tag72 { get; set; }
+
+    public double? Tag73 { get; set; }
+
+    public double? Tag74 { get; set; }
+
+    public double? Tag75 { get; set; }
+
+    public double? Tag76 { get; set; }
+
+    public double? Tag77 { get; set; }
+}

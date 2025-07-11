@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace Server.Models;
+
+public partial class BmRo90
+{
+    public int Id { get; set; }
+
+    public DateTime? Time { get; set; }
+
+    public double? Tag1 { get; set; }
+
+    public double? Tag2 { get; set; }
+}

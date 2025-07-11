@@ -1,22 +1,23 @@
-import icons from "../../ultils/icons";
-import avatar from "../../assets/image/account.png";
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { apiLogout } from "../../apis/user";
-import { toast } from "react-toastify";
-import path from "../../ultils/path";
-import { FaMessage } from "react-icons/fa6";
-import { FaBell } from "react-icons/fa";
-import { IoIosSunny } from "react-icons/io";
-import { navigation } from "../../ultils/contain";
-import { clsx } from "clsx";
+import icons from '../../ultils/icons';
+import avatar from '../../assets/image/account.png';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { apiLogout } from '../../apis/user';
+import { toast } from 'react-toastify';
+import path from '../../ultils/path';
+import { FaMessage } from 'react-icons/fa6';
+import { FaBell } from 'react-icons/fa';
+import { IoIosSunny } from 'react-icons/io';
+import { navigation } from '../../ultils/contain';
+import { clsx } from 'clsx';
 const { IoMdMenu } = icons;
-const Header = ({ onToggleSidebar , setCurrentNav}) => {
+const Header = ({ onToggleSidebar, setCurrentNav }) => {
   const navigate = useNavigate();
   const [isShowOption, setIsShowOption] = useState(false);
-  const curentUser = JSON.parse(localStorage.getItem("userInfo"));
-  const refreshToken = localStorage.getItem("refreshToken");
-  const [currentNav1, setCurrentNav1] = useState("Home");
+  const curentUser = JSON.parse(localStorage.getItem('userInfo'));
+  const refreshToken = localStorage.getItem('refreshToken');
+  // console.log('daaa', refreshToken);
+  const [currentNav1, setCurrentNav1] = useState('Home');
   const handleLogout = async () => {
     const rs = await apiLogout(refreshToken);
     if (rs?.status) {
@@ -24,35 +25,35 @@ const Header = ({ onToggleSidebar , setCurrentNav}) => {
       localStorage.clear();
       navigate(`${path.LOGIN}`);
     } else {
-      toast.error("Đã có lỗi xảy ra!");
+      toast.error('Đã có lỗi xảy ra!');
     }
   };
   const handleActive = (value) => {
-    setCurrentNav(value)
-    setCurrentNav1(value)
-  }
+    setCurrentNav(value);
+    setCurrentNav1(value);
+  };
 
   return (
     <div className="w-full bg-white h-[50px] flex justify-between items-center ">
       <div className="ml-2 cursor-pointer" onClick={onToggleSidebar}>
         <IoMdMenu size={25}></IoMdMenu>
       </div>
-    <div className="flex items-center gap-2 px-4 py-2">
-  {navigation.map((el) => (
-    <button
-      key={el.id}
-      onClick={() => handleActive(el?.value)}
-      className={clsx(
-        "flex items-center gap-1 px-3 py-1.5 text-sm border rounded border-blue-600 transition",
-        currentNav1 === el.value
-          ? "bg-blue-600 text-white"
-          : "text-blue-600 hover:bg-blue-100"
-      )}
-    >
-      {el.value}
-    </button>
-  ))}
-</div>
+      <div className="flex items-center gap-2 px-4 py-2">
+        {navigation.map((el) => (
+          <button
+            key={el.id}
+            onClick={() => handleActive(el?.value)}
+            className={clsx(
+              'flex items-center gap-1 px-3 py-1.5 text-sm border rounded border-blue-600 transition',
+              currentNav1 === el.value
+                ? 'bg-blue-600 text-white'
+                : 'text-blue-600 hover:bg-blue-100'
+            )}
+          >
+            {el.value}
+          </button>
+        ))}
+      </div>
 
       <div className="flex gap-4 mr-10 ">
         <div className="flex items-center gap-7 ">
@@ -81,8 +82,7 @@ const Header = ({ onToggleSidebar , setCurrentNav}) => {
             />
 
             <span className="hidden text-[14px] sm:block">
-              {/* {curentUser?.userName || curentUser?.maNv} */}
-              Wellcome Lê Đạt
+              {curentUser?.userName || curentUser?.maNv}
             </span>
 
             {isShowOption && (

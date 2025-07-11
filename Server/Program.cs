@@ -2,8 +2,8 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Server.Data;
 using Server.Models;
+
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers()
@@ -12,7 +12,7 @@ builder.Services.AddControllers()
         options.JsonSerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
     });
 
-builder.Services.AddDbContext<NmNhietDienContext>(options =>
+builder.Services.AddDbContext<NMCD2Context>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectDB")));
 
 builder.Services.AddCors(options =>
@@ -22,7 +22,8 @@ builder.Services.AddCors(options =>
         {
             policy.WithOrigins("http://localhost:5173")
                   .AllowAnyHeader()
-                  .AllowAnyMethod();
+                  .AllowAnyMethod()
+                  .WithExposedHeaders("Content-Disposition"); 
         });
 });
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -53,6 +54,12 @@ builder.Services.AddControllers();
 
 var app = builder.Build();
 app.UseCors("ReactClient");
+
+app.Use(async (context, next) =>
+{
+    context.Response.Headers.Append("Access-Control-Expose-Headers", "Content-Disposition");
+    await next();
+});
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

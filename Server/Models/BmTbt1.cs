@@ -1,0 +1,21 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace Server.Models;
+
+public partial class BmTbt1
+{
+    public int Id { get; set; }
+
+    public DateTime? Time { get; set; }
+
+    public double? Tag1 { get; set; }
+
+    public double? Tag2 { get; set; }
+
+    public double? Tag3 { get; set; }
+
+    public double? Tag4 { get; set; }
+
+    public double? Tag5 { get; set; }
+}

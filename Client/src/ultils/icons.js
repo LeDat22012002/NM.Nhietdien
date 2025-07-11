@@ -1,4 +1,4 @@
-import { HiPhone, HiOutlineDotsHorizontal } from "react-icons/hi";
+import { HiPhone, HiOutlineDotsHorizontal } from 'react-icons/hi';
 import {
   MdDashboardCustomize,
   MdGroups,
@@ -7,19 +7,21 @@ import {
   MdOutlineColorLens,
   MdOutlineCategory,
   MdClose,
-} from "react-icons/md";
+} from 'react-icons/md';
 
 import {
   IoBagCheck,
   IoHome,
   IoGiftSharp,
   IoReturnDownBackSharp,
-} from "react-icons/io5";
-import { HiMiniUserCircle } from "react-icons/hi2";
-import { BsStar, BsStarFill } from "react-icons/bs";
-import { AiOutlineEye, AiOutlineDownCircle } from "react-icons/ai";
-import { IoMdMenu, IoIosArrowForward } from "react-icons/io";
-import { FcGoogle } from "react-icons/fc";
+  IoRadioButtonOn,
+} from 'react-icons/io5';
+
+import { HiMiniUserCircle } from 'react-icons/hi2';
+import { BsStar, BsStarFill } from 'react-icons/bs';
+import { AiOutlineEye, AiOutlineDownCircle } from 'react-icons/ai';
+import { IoMdMenu, IoIosArrowForward } from 'react-icons/io';
+import { FcGoogle } from 'react-icons/fc';
 import {
   FaFacebook,
   FaShieldAlt,
@@ -33,11 +35,34 @@ import {
   FaRegEdit,
   FaUserEdit,
   FaSearch,
-} from "react-icons/fa";
-import { ImBin } from "react-icons/im";
-import { RiLogoutCircleRLine, RiProductHuntLine } from "react-icons/ri";
-import { FaCartArrowDown } from "react-icons/fa6";
-import { TbCircleNumber1Filled ,TbCircleNumber2Filled ,TbCircleNumber3Filled } from "react-icons/tb";
+  FaUser,
+} from 'react-icons/fa';
+import { ImBin } from 'react-icons/im';
+import { RiLogoutCircleRLine, RiProductHuntLine } from 'react-icons/ri';
+import { FaCartArrowDown } from 'react-icons/fa6';
+import {
+  TbCircleNumber1Filled,
+  TbCircleNumber2Filled,
+  TbCircleNumber3Filled,
+  TbHexagonNumber1,
+  TbHexagonNumber2,
+  TbHexagonNumber3,
+  TbHexagonNumber4,
+  TbHexagonNumber5,
+  TbHexagonNumber6,
+  TbHexagonNumber7,
+  TbHexagonNumber8,
+  TbHexagonNumber9,
+  TbCircleDashedNumber1,
+  TbCircleDashedNumber2,
+  TbCircleDashedNumber3,
+  TbCircleDashedNumber4,
+  TbCircleDashedNumber5,
+  TbCircleDashedNumber6,
+  TbCircleDashedNumber7,
+  TbCircleDashedNumber8,
+  TbCircleDashedNumber9,
+} from 'react-icons/tb';
 const icons = {
   HiPhone,
   MdEmail,
@@ -75,10 +100,30 @@ const icons = {
   IoReturnDownBackSharp,
   MdClose,
   FaUserEdit,
+  FaUser,
   FaSearch,
   TbCircleNumber1Filled,
   TbCircleNumber2Filled,
-  TbCircleNumber3Filled
+  TbCircleNumber3Filled,
+  TbHexagonNumber1,
+  TbHexagonNumber2,
+  TbHexagonNumber3,
+  TbHexagonNumber4,
+  TbHexagonNumber5,
+  TbHexagonNumber6,
+  TbHexagonNumber7,
+  TbHexagonNumber8,
+  TbHexagonNumber9,
+  TbCircleDashedNumber1,
+  TbCircleDashedNumber2,
+  TbCircleDashedNumber3,
+  TbCircleDashedNumber4,
+  TbCircleDashedNumber5,
+  TbCircleDashedNumber6,
+  TbCircleDashedNumber7,
+  TbCircleDashedNumber8,
+  TbCircleDashedNumber9,
+  IoRadioButtonOn,
 };
 
 export default icons;

@@ -1,21 +1,21 @@
-import { Button, InputField } from "../../../components";
-import { useCallback, useState } from "react";
-import { toast } from "react-toastify";
-import { validate } from "../../../ultils/helpers";
-import { apiRegister } from "../../../apis/user";
+import { Button, InputField } from '../../../components';
+import { useCallback, useState } from 'react';
+import { toast } from 'react-toastify';
+import { validate } from '../../../ultils/helpers';
+import { apiRegister } from '../../../apis/user';
 
 const Register = () => {
   const chucVus = [
-    { _id: "KTV CNTT", title: "KTV CNTT" },
-    { _id: "KTV TĐH", title: "KTV Tự động hóa" },
-    { _id: "Giám đốc", title: "Giám đốc" },
+    { _id: 'KTV CNTT', title: 'KTV CNTT' },
+    { _id: 'KTV TĐH', title: 'KTV Tự động hóa' },
+    { _id: 'Giám đốc', title: 'Giám đốc' },
   ];
   const [payload, setPayload] = useState({
-    manv: "",
-    password: "",
-    username: "",
+    manv: '',
+    password: '',
+    username: '',
   });
-  const [selectedChucVu, setSelectedChucVu] = useState("");
+  const [selectedChucVu, setSelectedChucVu] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [invalidFields, setInvalidFields] = useState([]);
 
@@ -27,7 +27,7 @@ const Register = () => {
     if (!selectedChucVu) {
       setInvalidFields((prev) => [
         ...prev,
-        { name: "chucVu", message: "Vui lòng chọn chức vụ!" },
+        { name: 'chucVu', message: 'Vui lòng chọn chức vụ!' },
       ]);
       return;
     }
@@ -39,7 +39,7 @@ const Register = () => {
       };
       console.log(finalPayload);
       const rs = await apiRegister(finalPayload);
-      console.log("dattst", rs);
+      console.log('dattst', rs);
       if (rs?.status) {
         toast.success(rs?.message);
       } else {
@@ -49,7 +49,7 @@ const Register = () => {
   }, [payload, selectedChucVu]);
 
   return (
-    <div className="flex items-center justify-center mt-4 ">
+    <div className="flex items-center justify-center mt-[150px] ">
       <div className=" w-[370px] p-8 md:w-[450px] bg-white rounded-md lg:w-[500px] flex flex-col items-center shadow-lg z-10 animate-slide-up">
         <h1 className="text-[28px] font-semibold text-main mb-8">
           TẠO TÀI KHOẢN

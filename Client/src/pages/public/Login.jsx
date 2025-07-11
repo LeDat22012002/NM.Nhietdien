@@ -1,19 +1,19 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback } from 'react';
 
-import { InputField, Button } from "../../components";
-import { apiLogin } from "../../apis/user";
-import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
-import path from "../../ultils/path";
-import { validate } from "../../ultils/helpers";
-import BgHPDQ from "../../assets/image/Br_HoaPhat.png";
+import { InputField, Button } from '../../components';
+import { apiLogin } from '../../apis/user';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import path from '../../ultils/path';
+import { validate } from '../../ultils/helpers';
+import BgHPDQ from '../../assets/image/Br_HoaPhat.png';
 
 const Login = () => {
   // const [manv, setManv] = useState("");
   // const [password, setPassword] = useState("");
   const [payload, setPayload] = useState({
-    manv: "",
-    password: "",
+    manv: '',
+    password: '',
   });
   const [invalidFields, setInvalidFields] = useState([]);
   const navigate = useNavigate();
@@ -22,20 +22,20 @@ const Login = () => {
     const invalids = validate(data, setInvalidFields);
     if (invalids === 0) {
       const rs = await apiLogin(data);
-      console.log("res", rs);
+      // console.log("res", rs);
       if (rs.status) {
         const { accessToken, maNv, role, refreshToken, chucVu, userName } =
           rs.data;
-        localStorage.setItem("accessToken", accessToken);
-        localStorage.setItem("refreshToken", refreshToken);
+        localStorage.setItem('accessToken', accessToken);
+        localStorage.setItem('refreshToken', refreshToken);
         localStorage.setItem(
-          "userInfo",
+          'userInfo',
           JSON.stringify({ maNv, role, chucVu, userName })
         );
         navigate(`/${path.LAYOUT}/${path.THONGKE}`);
         toast.success(rs.message);
       } else {
-        toast.error("Đăng nhập thất bại!");
+        toast.error('Đăng nhập thất bại!');
       }
     }
   }, [payload]);

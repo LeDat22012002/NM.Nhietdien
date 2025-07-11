@@ -1,10 +1,18 @@
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Server.Models;
+using System.Linq;
+using System.Threading.Tasks;
 
-public class LoginRequest
+namespace Server.Models
 {
-    [Required]
-    public string Manv { get; set; } = null!;
-    [Required]
-    public string Password { get; set; } = null!;
+    public class LoginRequest
+    {
+        
+        [Required]
+        public string Manv { get; set; } = null!;
+        [Required]
+        public string Password { get; set; } = null!;
+
+    }
 }
