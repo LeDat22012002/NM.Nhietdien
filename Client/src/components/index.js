@@ -10,3 +10,5 @@ export { default as Button } from './Button/Button';
 export { default as MenuItem } from './MenuItem/menuItem';
 
 export { default as FilterTime } from './FilterTime/FilterTime';
+
+export { default as BM3 } from './Tuabin/Turbine/BM3';

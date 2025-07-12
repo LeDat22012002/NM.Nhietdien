@@ -27,10 +27,9 @@ const {
   IoRadioButtonOn,
 } = icons;
 
-const current = JSON.parse(localStorage.getItem('userInfo'));
 // console.log('ddtdtd', current);
 // console.log(typeof current?.role);
-export const HomeSidebar = () => [
+export const HomeSidebar = (current) => [
   // {
   //   id: 1,
   //   type: 'SINGLE',
@@ -58,7 +57,7 @@ export const HomeSidebar = () => [
           id: 3,
           type: 'PARENT',
           text: 'QUẢN TRỊ VIÊN',
-          icon: <TbCircleNumber3Filled size={20} />,
+          icon: <TbCircleNumber2Filled size={20} />,
           submenu: [
             {
               text: 'Tạo tài khoản',

@@ -11,5 +11,6 @@ namespace Server.Models
         public string RefreshToken { get; set; } = "";
         public string MaNv { get; set; } = "";
         public int? Role { get; set; } 
+        public string? HoTen { get; set; }
     }
 }

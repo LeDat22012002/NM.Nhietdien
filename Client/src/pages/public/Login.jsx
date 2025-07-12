@@ -7,10 +7,14 @@ import { useNavigate } from 'react-router-dom';
 import path from '../../ultils/path';
 import { validate } from '../../ultils/helpers';
 import BgHPDQ from '../../assets/image/Br_HoaPhat.png';
+import { useDispatch } from 'react-redux';
+import { login } from '../../store/user/userSlice';
+import { setCurrentNav } from '../../store/currentNav/navSlice';
 
 const Login = () => {
   // const [manv, setManv] = useState("");
   // const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
   const [payload, setPayload] = useState({
     manv: '',
     password: '',
@@ -22,16 +26,22 @@ const Login = () => {
     const invalids = validate(data, setInvalidFields);
     if (invalids === 0) {
       const rs = await apiLogin(data);
-      // console.log("res", rs);
+      console.log('res', rs);
       if (rs.status) {
-        const { accessToken, maNv, role, refreshToken, chucVu, userName } =
-          rs.data;
-        localStorage.setItem('accessToken', accessToken);
-        localStorage.setItem('refreshToken', refreshToken);
-        localStorage.setItem(
-          'userInfo',
-          JSON.stringify({ maNv, role, chucVu, userName })
+        const { accessToken, maNv, role, refreshToken, hoTen } = rs.data;
+        dispatch(
+          login({
+            isLoggedIn: true,
+            token: accessToken,
+            refreshtoken: refreshToken,
+            userData: {
+              maNv,
+              role,
+              hoTen,
+            },
+          })
         );
+        dispatch(setCurrentNav('Home'));
         navigate(`/${path.LAYOUT}/${path.THONGKE}`);
         toast.success(rs.message);
       } else {

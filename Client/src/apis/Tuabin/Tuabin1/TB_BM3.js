@@ -1,4 +1,4 @@
-import axios from '../../../../axois';
+import axios from '../../axois';
 
 export const apigetDataTB3 = (begind, endd, sortOrder = 'desc') =>
   axios({
@@ -11,13 +11,14 @@ export const apigetDataTB3 = (begind, endd, sortOrder = 'desc') =>
     },
   });
 
-export const apiExportExcelTB3 = (begind, endd) =>
+export const apiExportExcelTB3 = (begind, endd, turbineIndex) =>
   axios({
     url: '/TB_BM3/export',
     method: 'get',
     params: {
       begind,
       endd,
+      turbineIndex,
     },
     responseType: 'blob',
   });

@@ -1,4 +1,4 @@
-import axios from '../../axois';
+import axios from './axois';
 
 export const apiRegister = (data) =>
   axios({

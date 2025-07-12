@@ -2,13 +2,15 @@ import { Navigate, Outlet } from 'react-router-dom';
 import { Sidebar, Header } from '../../components';
 import { useState } from 'react';
 import clsx from 'clsx';
-import path from '../../ultils/path';
+// import path from '../../ultils/path';
+import { useSelector } from 'react-redux';
 const Layout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [currentNav, setCurrentNav] = useState('');
-  const curentUser = JSON.parse(localStorage.getItem('userInfo'));
-  if (!curentUser) {
-    return <Navigate to={`${path.LOGIN}`} replace={true}></Navigate>;
+  const { current, isLoggedIn } = useSelector((state) => state.user);
+
+  if (!current && !isLoggedIn) {
+    return <Navigate to={`/`} replace />;
   }
   return (
     <div className="flex w-full h-screen text-gray-900">

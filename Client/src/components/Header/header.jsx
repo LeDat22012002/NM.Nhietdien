@@ -10,16 +10,18 @@ import { FaBell } from 'react-icons/fa';
 import { IoIosSunny } from 'react-icons/io';
 import { navigation } from '../../ultils/contain';
 import { clsx } from 'clsx';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCurrentNav } from '../../store/currentNav/navSlice';
 const { IoMdMenu } = icons;
-const Header = ({ onToggleSidebar, setCurrentNav }) => {
+const Header = ({ onToggleSidebar }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [isShowOption, setIsShowOption] = useState(false);
-  const curentUser = JSON.parse(localStorage.getItem('userInfo'));
-  const refreshToken = localStorage.getItem('refreshToken');
+  const { current, refreshtoken } = useSelector((state) => state.user);
   // console.log('daaa', refreshToken);
-  const [currentNav1, setCurrentNav1] = useState('Home');
+  const { currentNav } = useSelector((state) => state.nav);
   const handleLogout = async () => {
-    const rs = await apiLogout(refreshToken);
+    const rs = await apiLogout(refreshtoken);
     if (rs?.status) {
       toast.success(rs?.message);
       localStorage.clear();
@@ -29,8 +31,7 @@ const Header = ({ onToggleSidebar, setCurrentNav }) => {
     }
   };
   const handleActive = (value) => {
-    setCurrentNav(value);
-    setCurrentNav1(value);
+    dispatch(setCurrentNav(value));
   };
 
   return (
@@ -45,7 +46,7 @@ const Header = ({ onToggleSidebar, setCurrentNav }) => {
             onClick={() => handleActive(el?.value)}
             className={clsx(
               'flex items-center gap-1 px-3 py-1.5 text-sm border rounded border-blue-600 transition',
-              currentNav1 === el.value
+              currentNav === el.value
                 ? 'bg-blue-600 text-white'
                 : 'text-blue-600 hover:bg-blue-100'
             )}
@@ -82,7 +83,7 @@ const Header = ({ onToggleSidebar, setCurrentNav }) => {
             />
 
             <span className="hidden text-[14px] sm:block">
-              {curentUser?.userName || curentUser?.maNv}
+              {current?.hoTen || current?.maNv}
             </span>
 
             {isShowOption && (

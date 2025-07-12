@@ -48,7 +48,7 @@ namespace Server.Controllers
         
 
         [HttpGet("export")]
-        public IActionResult ExportBM3ToExcel(DateTime? begind, DateTime? endd)
+        public IActionResult ExportBM3ToExcel(DateTime? begind, DateTime? endd , int turbineIndex = 1)
         {
             // 1. Lấy dữ liệu từ database
             var data = _context.Tb1Bm3s
@@ -90,7 +90,31 @@ namespace Server.Controllers
 
             using var workbook = new XLWorkbook(templatePath);
             var worksheet = workbook.Worksheet("Biểu mẫu 3"); // Sheet name
+            for (int col = 1; col <= 100; col++) // quét từ cột A đến CV (100 cột)
+            {
+                var cell = worksheet.Cell(4, col); 
+                var text = cell.GetString();
 
+                if (!string.IsNullOrWhiteSpace(text) && text.Contains("TURBINE ..."))
+                {
+                    cell.Value = text.Replace("...", turbineIndex.ToString());
+                    break;
+                }
+            }
+
+            var today = DateTime.Now;
+            for (int col = 1; col <= 100; col++) // dòng 5
+            {
+                var cell = worksheet.Cell(5, col);
+                var text = cell.GetString();
+
+                if (!string.IsNullOrWhiteSpace(text) && text.Contains("Ngày"))
+                {
+                    cell.Value = $"Ngày {today.Day} tháng {today.Month} năm {today.Year}";
+                    break;
+                }
+            }
+            // dòng bắt đầu đổ dữ liệu 
             int startRow = 11;
             int currentRow = startRow;
 
@@ -141,49 +165,7 @@ namespace Server.Controllers
         }
 
 
-        // [HttpGet("export1")]
-        // public IActionResult ExportBM3ToExcel1(DateTime begind, DateTime endd)
-        // {
-        //     var data = _context.Tb1Bm3s
-        //         .Where(x => x.Time >= begind && x.Time <= endd)
-        //         .OrderBy(x => x.Time)
-        //         .ToList();
-
-        //     using var workbook = new XLWorkbook();
-        //     var worksheet = workbook.Worksheets.Add("BM3 Data");
-
-        //     // Tiêu đề
-        //     worksheet.Cell(1, 1).Value = "Time";
-        //     for (int i = 1; i <= 73; i++)
-        //         worksheet.Cell(1, i + 1).Value = $"Tag{i}";
-
-        //     int row = 2;
-        //     foreach (var item in data)
-        //     {
-        //         worksheet.Cell(row, 1).Value = item.Time?.ToString("dd/MM/yyyy HH:mm");
-
-        //         for (int i = 1; i <= 73; i++)
-        //         {
-        //             var prop = typeof(Tb1Bm3).GetProperty($"Tag{i}");
-        //             var value = prop?.GetValue(item) as double?;
-        //             worksheet.Cell(row, i + 1).Value = value ?? 0;
-        //         }
-
-        //         row++;
-        //     }
-
-        //     using var stream = new MemoryStream();
-        //     workbook.SaveAs(stream);
-        //     stream.Seek(0, SeekOrigin.Begin);
-
-        //     string filename = $"BM3_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx";
-
-        //     Response.Headers.Add("Content-Disposition", $"attachment; filename={filename}");
-        //     return File(stream.ToArray(),
-        //                 "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        //                 filename);
-        // }
-
+        
 
 
 

@@ -64,7 +64,7 @@ public class UserController : ControllerBase
     public async Task<IActionResult> Login([FromBody] LoginRequest request)
     {
         string mk = Encryptor.MD5Hash(request.Password);
-        var account = await _context.NguoiDungs
+        var account = await _context.NguoiDungs.Include(x => x.NhanVien)
                     .FirstOrDefaultAsync(x =>
                         x.TenDangNhap == request.Manv &&
                         x.MatKhau == mk &&
@@ -94,8 +94,9 @@ public class UserController : ControllerBase
             {
                 AccessToken = accessToken,
                 RefreshToken = refreshToken,
-                MaNv = account.TenDangNhap,
-                Role = role
+                MaNv = account?.TenDangNhap,
+                Role = role,
+                HoTen = account?.NhanVien?.HoTen
             }
         };
 

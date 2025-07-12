@@ -4,16 +4,19 @@ import { HomeSidebar, NHLBSidebar, TBMPSidebar } from '../../ultils/contain';
 import clsx from 'clsx';
 import icons from '../../ultils/icons';
 import logo from '../../assets/image/Logo.png';
+import { useSelector } from 'react-redux';
 
 const { FaSortDown, FaCaretRight } = icons;
 
-const Sidebar = ({ isMini, onExpand, currentNav }) => {
+const Sidebar = ({ isMini, onExpand }) => {
+  const { current } = useSelector((state) => state.user);
+  const { currentNav } = useSelector((state) => state.nav);
   const sidebarItems = useMemo(() => {
     if (currentNav === 'Xưởng nồi hơi lọc bụi') return NHLBSidebar();
     if (currentNav === 'Xưởng Tuabin,máy phát') return TBMPSidebar();
-    // if (currentNav === 'X.nồi hơi lọc bụi') return NHLBSidebar();
-    // if (currentNav === 'X.Tuabin,máy phát') return TBMPSidebar();
-    if (currentNav === 'Home') return HomeSidebar();
+    if (currentNav === 'Home') return HomeSidebar(current);
+
+    return HomeSidebar(current);
   }, [currentNav]);
 
   const [actived, setActived] = useState([]); // level 1
