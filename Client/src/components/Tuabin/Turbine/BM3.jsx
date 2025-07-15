@@ -1,9 +1,145 @@
 import { memo, useEffect, useState } from 'react';
 import moment from 'moment';
-// import { apiExportExcelTB3, apigetDataTB3 } from '../../../apis';
 import logo from '../../../assets/image/Logo.png';
 import { FilterTime } from '../../../components';
 import { toast } from 'react-toastify';
+import clsx from 'clsx';
+
+const row1 = [
+  {
+    colSpan: 1,
+    rowSpan: 3,
+    title: (
+      <div className="flex flex-col items-center font-bold justify-between h-[200px] text-[14px]">
+        <span>Hạng mục</span>
+        <span>Trị số</span>
+      </div>
+    ),
+  },
+  { colSpan: 24, title: 'Bơm cấp nước' },
+  { colSpan: 3, rowSpan: 2, title: 'Bình tách oxy' },
+  { colSpan: 12, title: 'Bơm nước tuần hoàn' },
+  { colSpan: 12, title: 'Tháp làm mát' },
+];
+
+const row2 = [
+  { colSpan: 12, title: 'Bơm cấp nước số...' },
+  { colSpan: 12, title: 'Bơm cấp nước số...' },
+  { colSpan: 4, title: 'Bơm tuần hoàn số...' },
+  { colSpan: 4, title: 'Bơm tuần hoàn số...' },
+  { colSpan: 4, title: 'Bơm tuần hoàn số...' },
+  { colSpan: 4, title: 'Quạt số' },
+  { colSpan: 4, title: 'Quạt số' },
+  { colSpan: 4, title: 'Quạt số' },
+];
+
+const row3 = [
+  { title: 'I động cơ', colSpan: 1 },
+  { title: 'Tº gối trước động cơ', colSpan: 1 },
+  { title: 'Tº gối sau động cơ', colSpan: 1 },
+  { title: 'Tº gối trước bơm', colSpan: 1 },
+  { title: 'Tº gối sau bơm', colSpan: 1 },
+  { title: 'Tº dầu làm mát gối trục', colSpan: 1 },
+  { title: 'P dầu làm mát gối trục', colSpan: 1 },
+  { title: 'Độ rung ổ trục trước max', colSpan: 1 },
+  { title: 'Độ rung ổ trục sau max', colSpan: 1 },
+  { title: 'Tº cuộn dây max 1', colSpan: 1 },
+  { title: 'Tº cuộn dây max 2', colSpan: 1 },
+  { title: 'Mức dầu', colSpan: 1 },
+  { title: 'I động cơ', colSpan: 1 },
+  { title: 'Tº gối trước động cơ', colSpan: 1 },
+  { title: 'Tº gối sau động cơ', colSpan: 1 },
+  { title: 'Tº gối trước bơm', colSpan: 1 },
+  { title: 'Tº gối sau bơm', colSpan: 1 },
+  { title: 'Tº dầu làm mát gối trục', colSpan: 1 },
+  { title: 'P dầu làm mát gối trục', colSpan: 1 },
+  { title: 'Độ rung ổ trục trước max', colSpan: 1 },
+  { title: 'Độ rung ổ trục sau max', colSpan: 1 },
+  { title: 'Tº cuộn dây max 1', colSpan: 1 },
+  { title: 'Tº cuộn dây max2', colSpan: 1 },
+  { title: 'Mức dầu', colSpan: 1 },
+  { title: 'Nhiệt độ', colSpan: 1 },
+  { title: 'Mức nước', colSpan: 1 },
+  { title: 'Áp suất', colSpan: 1 },
+  { title: 'I động cơ', colSpan: 1 },
+  { title: 'Tº gối động cơ trước', colSpan: 1 },
+  { title: 'Tº gối động cơ sau', colSpan: 1 },
+  { title: 'Tº cuộn dây max', colSpan: 1 },
+  { title: 'I động cơ', colSpan: 1 },
+  { title: 'Tº gối động cơ trước', colSpan: 1 },
+  { title: 'Tº gối động cơ sau', colSpan: 1 },
+  { title: 'Tº cuộn dây max', colSpan: 1 },
+  { title: 'I động cơ', colSpan: 1 },
+  { title: 'Tº gối động cơ trước', colSpan: 1 },
+  { title: 'Tº gối động cơ sau', colSpan: 1 },
+  { title: 'Tº cuộn dây max', colSpan: 1 },
+  { title: 'Dòng điện', colSpan: 1 },
+  { title: 'Độ rung', colSpan: 1 },
+  { title: 'Tº dầu hộp giảm tốc', colSpan: 1 },
+  { title: 'L dầu hộp giảm tốc', colSpan: 1 },
+  { title: 'Dòng điện', colSpan: 1 },
+  { title: 'Độ rung', colSpan: 1 },
+  { title: 'Tº dầu hộp giảm tốc', colSpan: 1 },
+  { title: 'L dầu hộp giảm tốc', colSpan: 1 },
+  { title: 'Dòng điện', colSpan: 1 },
+  { title: 'Độ rung', colSpan: 1 },
+  { title: 'Tº dầu hộp giảm tốc', colSpan: 1 },
+  { title: 'L dầu hộp giảm tốc', colSpan: 1 },
+];
+const row4 = [
+  { title: 'h', colSpan: 1 },
+  { title: 'A', colSpan: 1 },
+  { title: 'ºC', colSpan: 1 },
+  { title: 'ºC', colSpan: 1 },
+  { title: 'ºC', colSpan: 1 },
+  { title: 'ºC', colSpan: 1 },
+  { title: 'ºC', colSpan: 1 },
+  { title: 'MPa', colSpan: 1 },
+  { title: 'mm/s', colSpan: 1 },
+  { title: 'mm/s', colSpan: 1 },
+  { title: 'ºC', colSpan: 1 },
+  { title: 'ºC', colSpan: 1 },
+  { title: 'mm	', colSpan: 1 },
+  { title: 'A', colSpan: 1 },
+  { title: 'ºC', colSpan: 1 },
+  { title: 'ºC', colSpan: 1 },
+  { title: 'ºC', colSpan: 1 },
+  { title: 'ºC', colSpan: 1 },
+  { title: 'ºC', colSpan: 1 },
+  { title: 'MPa', colSpan: 1 },
+  { title: 'mm/s', colSpan: 1 },
+  { title: 'mm/s', colSpan: 1 },
+  { title: 'ºC', colSpan: 1 },
+  { title: 'ºC', colSpan: 1 },
+  { title: 'mm', colSpan: 1 },
+  { title: 'ºC', colSpan: 1 },
+  { title: 'mm', colSpan: 1 },
+  { title: 'MPa', colSpan: 1 },
+  { title: 'A', colSpan: 1 },
+  { title: 'ºC', colSpan: 1 },
+  { title: 'ºC', colSpan: 1 },
+  { title: 'ºC', colSpan: 1 },
+  { title: 'A', colSpan: 1 },
+  { title: 'ºC', colSpan: 1 },
+  { title: 'ºC', colSpan: 1 },
+  { title: 'ºC', colSpan: 1 },
+  { title: 'A', colSpan: 1 },
+  { title: 'ºC', colSpan: 1 },
+  { title: 'TºC', colSpan: 1 },
+  { title: 'ºC', colSpan: 1 },
+  { title: 'A', colSpan: 1 },
+  { title: 'mm/s', colSpan: 1 },
+  { title: 'ºC', colSpan: 1 },
+  { title: 'mm', colSpan: 1 },
+  { title: 'A', colSpan: 1 },
+  { title: 'mm/s', colSpan: 1 },
+  { title: 'ºC', colSpan: 1 },
+  { title: 'mm', colSpan: 1 },
+  { title: 'A', colSpan: 1 },
+  { title: 'mm/s', colSpan: 1 },
+  { title: 'ºC', colSpan: 1 },
+  { title: 'mm', colSpan: 1 },
+];
 
 const BM_11_QT_05_08 = ({ apiGet, apiExportExcel, title, turbineIndex }) => {
   const [data1, setData1] = useState(null);
@@ -57,7 +193,6 @@ const BM_11_QT_05_08 = ({ apiGet, apiExportExcel, title, turbineIndex }) => {
     try {
       const response = await apiExportExcel(begind, endd, turbineIndex);
 
-      //  Đảm bảo response và headers tồn tại
       if (!response || !response.data) {
         throw new Error('Không nhận được dữ liệu từ server.');
       }
@@ -117,725 +252,79 @@ const BM_11_QT_05_08 = ({ apiGet, apiExportExcel, title, turbineIndex }) => {
         <h2 className="text-lg font-bold">{title}</h2>
       </div>
       <div className="max-w-full overflow-x-auto overflow-y-auto border border-gray-300 rounded scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
-        <div className="w-[1000px] h-[600px]">
-          <table className="border border-collapse border-gray-400 ">
+        <div className="w-[1000px] h-[610px]">
+          <table className="table-fixed border border-collapse w-full text-[10px]">
             <colgroup>
-              {Array.from({ length: 55 }).map((_, i) => (
-                <col key={i} style={{ width: '20px' }} />
+              {Array.from({ length: 52 }).map((_, i) => (
+                <col key={i} style={{ width: '60px' }} />
               ))}
             </colgroup>
             <thead className="text-sm text-gray-700 border border-gray-700">
               <tr>
-                <th
-                  colSpan={4}
-                  rowSpan={3}
-                  className="px-1 py-2 text-center align-middle border border-gray-700 "
-                >
-                  <div className="flex flex-col items-center font-bold justify-between h-[200px] text-[14px]">
-                    <span>Hạng mục</span>
-                    <span>Trị số</span>
-                  </div>
-                </th>
-                <th
-                  colSpan={24}
-                  className=" py-2 px-2 text-[14px] font-bold text-center border border-gray-700"
-                >
-                  Bơm cấp nước
-                </th>
-                <th
-                  colSpan={3}
-                  rowSpan={2}
-                  className=" py-2 px-2 text-[14px] font-bold text-center border border-gray-700"
-                >
-                  Bình tách oxy
-                </th>
-                <th
-                  colSpan={12}
-                  className=" py-2 px-2 text-[14px] font-bold text-center border border-gray-700"
-                >
-                  Bơm nước tuần hoàn
-                </th>
-                <th
-                  colSpan={12}
-                  className=" py-2 px-2 text-[14px] font-bold text-center border border-gray-700"
-                >
-                  Tháp làm mát
-                </th>
+                {row1.map((item, index) => (
+                  <th
+                    key={index}
+                    colSpan={item.colSpan}
+                    rowSpan={item.rowSpan}
+                    className={clsx(
+                      'sticky top-[0px] bg-white min-w-[50px] px-1 py-2 text-center align-middle h-[50px]',
+                      'border-l border-gray-700 shadow-[inset_0_-1px_0_#4b5563]',
+                      index === 0 &&
+                        'left-0 z-[60] shadow-[inset_-1px_0_0_#4b5563]'
+                    )}
+                  >
+                    {item.title}
+                  </th>
+                ))}
+              </tr>
+
+              <tr>
+                {row2.map((item, index) => (
+                  <th
+                    key={index}
+                    colSpan={item.colSpan}
+                    className={clsx(
+                      'sticky top-[50px] z-10 bg-white h-[50px]  min-w-[50px] max-w-[50px] px-1 py-1 text-center align-middle',
+                      'border border-gray-700'
+                    )}
+                  >
+                    {item.title}
+                  </th>
+                ))}
               </tr>
               <tr>
-                <th
-                  colSpan={12}
-                  className=" py-2 px-2 text-[14px] font-bold text-center border border-gray-700"
-                >
-                  Bơm cấp nước số...
-                </th>
-                <th
-                  colSpan={12}
-                  className=" py-2 px-2 text-[14px] font-bold text-center border border-gray-700"
-                >
-                  Bơm cấp nước số...
-                </th>
-                <th
-                  colSpan={4}
-                  className=" py-2 px-2 text-[14px] font-bold text-center border border-gray-700"
-                >
-                  Bơm tuần hoàn số...
-                </th>
-                <th
-                  colSpan={4}
-                  className=" py-2 px-2 text-[14px] font-bold text-center border border-gray-700"
-                >
-                  Bơm tuần hoàn số...
-                </th>
-                <th
-                  colSpan={4}
-                  className=" py-2 px-2 text-[14px] font-bold text-center border border-gray-700"
-                >
-                  Bơm tuần hoàn số...
-                </th>
-                <th
-                  colSpan={4}
-                  className=" py-2 px-2 text-[14px] font-bold text-center border border-gray-700"
-                >
-                  Quạt số
-                </th>
-                <th
-                  colSpan={4}
-                  className=" py-2 px-2 text-[14px] font-bold text-center border border-gray-700"
-                >
-                  Quạt số
-                </th>
-                <th
-                  colSpan={4}
-                  className=" py-2 px-2 text-[14px] font-bold text-center border border-gray-700"
-                >
-                  Quạt số
-                </th>
-              </tr>
-              <tr className="text-black">
-                <th
-                  colSpan={1}
-                  className="py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold  text-center border border-gray-700"
-                >
-                  I động cơ
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700"
-                >
-                  Tº gối trước động cơ
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700"
-                >
-                  Tº gối sau động cơ
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700"
-                >
-                  Tº gối trước bơm
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700"
-                >
-                  Tº gối sau bơm
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700"
-                >
-                  Tº dầu làm mát gối trục
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700"
-                >
-                  P dầu làm mát gối trục
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700"
-                >
-                  Độ rung ổ trục trước max
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700"
-                >
-                  Độ rung ổ trục sau max
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700"
-                >
-                  Tº cuộn dây max 1
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700"
-                >
-                  Tº cuộn dây max 2
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700"
-                >
-                  Mức dầu
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700"
-                >
-                  I động cơ
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700"
-                >
-                  Tº gối trước động cơ
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700"
-                >
-                  Tº gối sau động cơ
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700"
-                >
-                  Tº gối trước bơm
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700"
-                >
-                  Tº gối sau bơm
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700"
-                >
-                  Tº dầu làm mát gối trục
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700"
-                >
-                  P dầu làm mát gối trục
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700"
-                >
-                  Độ rung ổ trục trước max
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
-                >
-                  Độ rung ổ trục sau max
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
-                >
-                  Tº cuộn dây max 1
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
-                >
-                  Tº cuộn dây max2
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
-                >
-                  Mức dầu
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
-                >
-                  Nhiệt độ
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
-                >
-                  Mức nước
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
-                >
-                  Áp suất
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
-                >
-                  I động cơ
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
-                >
-                  Tº gối động cơ trước
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
-                >
-                  Tº gối động cơ sau
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
-                >
-                  Tº cuộn dây max
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
-                >
-                  I động cơ
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
-                >
-                  Tº gối động cơ trước
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
-                >
-                  Tº gối động cơ sau
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
-                >
-                  Tº cuộn dây max
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
-                >
-                  I động cơ
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
-                >
-                  Tº gối động cơ trước
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
-                >
-                  Tº gối động cơ sau
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
-                >
-                  Tº cuộn dây max
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
-                >
-                  Dòng điện
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
-                >
-                  Độ rung
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
-                >
-                  Tº dầu hộp giảm tốc
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
-                >
-                  L dầu hộp giảm tốc
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
-                >
-                  Dòng điện
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
-                >
-                  Độ rung
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
-                >
-                  Tº dầu hộp giảm tốc
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
-                >
-                  L dầu hộp giảm tốc
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
-                >
-                  Dòng điện
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
-                >
-                  Độ rung
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
-                >
-                  Tº dầu hộp giảm tốc
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold text-center border border-gray-700 "
-                >
-                  L dầu hộp giảm tốc
-                </th>
+                {row3.map((col, index) => (
+                  <th
+                    key={index}
+                    colSpan={col.colSpan}
+                    className={clsx(
+                      'sticky top-[95px] z-20 bg-white',
+                      'min-w-[60px] max-w-[60px] px-1 py-1 text-[10px] text-center align-middle',
+                      '[writing-mode:vertical-rl] rotate-180 truncate',
+                      'shadow-[inset_0_-1px_0_#4b5563] border border-gray-700'
+                    )}
+                  >
+                    {col.title}
+                  </th>
+                ))}
               </tr>
               <tr>
-                <th
-                  colSpan={4}
-                  className=" py-2 px-2 text-[10px] text-center border border-gray-700 "
-                >
-                  h
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  A
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  ºC
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  ºC
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  ºC
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  ºC
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  ºC
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  MPa
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  mm/s
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  mm/s
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  ºC
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  ºC
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  mm
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  A
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  ºC
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  ºC
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  ºC
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  ºC
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  ºC
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  MPa
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  mm/s
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  mm/s
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  ºC
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  ºC
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  mm
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  ºC
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  mm
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  MPa
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  A
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  ºC
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  ºC
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  ºC
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  A
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  ºC
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  ºC
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  ºC
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  A
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  ºC
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  ºC
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  ºC
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  A
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  mm/s
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  ºC
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  mm
-                </th>
-
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  A
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  mm/s
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  ºC
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  mm
-                </th>
-
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  A
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  mm/s
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  ºC
-                </th>
-                <th
-                  colSpan={1}
-                  className=" py-2 px-2 text-[10px]  text-center border border-gray-700 "
-                >
-                  mm
-                </th>
+                {row4.map((col, index) => (
+                  <th
+                    key={index}
+                    colSpan={col.colSpan}
+                    className={clsx(
+                      'sticky top-[231px] py-1 text-[10px] font-semibold text-center bg-white',
+                      'border border-gray-700 shadow-[inset_0_1px_0_#4b5563]',
+                      index === 0 &&
+                        'left-0 z-[60] shadow-[inset_-1px_0_0_#4b5563] border-r border-gray-700'
+                    )}
+                  >
+                    {col.title}
+                  </th>
+                ))}
               </tr>
+
               <tr className="hidden">
                 <th
                   colSpan={4}
@@ -858,15 +347,18 @@ const BM_11_QT_05_08 = ({ apiGet, apiExportExcel, title, turbineIndex }) => {
               {data1?.map((row, index) => (
                 <tr key={index}>
                   <td
-                    colSpan={4}
-                    className="border text-[10px] text-center font-bold border-gray-700"
+                    colSpan={1}
+                    className={clsx(
+                      'sticky left-0 z-[50] bg-yellow-400 text-[10px] text-center font-bold',
+                      'border border-gray-700 shadow-[inset_-1px_0_0_#4b5563]'
+                    )}
                   >
                     {moment(row?.thoiGian).format('HH:mm')}
                   </td>
                   {uniqueTagNames?.map((tagname) => (
                     <td
                       key={tagname}
-                      className="border text-black px-4 text-[10px] text-center border-gray-700"
+                      className="border border-gray-700 text-black text-center px-1 py-1 truncate max-w-[60px] overflow-hidden"
                     >
                       {row[tagname]}
                     </td>

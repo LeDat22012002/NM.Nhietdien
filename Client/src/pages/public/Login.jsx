@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 
-import { InputField, Button } from '../../components';
+import { InputField, Button, Loading } from '../../components';
 import { apiLogin } from '../../apis/user';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
@@ -10,6 +10,7 @@ import BgHPDQ from '../../assets/image/Br_HoaPhat.png';
 import { useDispatch } from 'react-redux';
 import { login } from '../../store/user/userSlice';
 import { setCurrentNav } from '../../store/currentNav/navSlice';
+import { showModal } from '../../store/loading/loadingSlice';
 
 const Login = () => {
   // const [manv, setManv] = useState("");
@@ -25,8 +26,9 @@ const Login = () => {
     const { ...data } = payload;
     const invalids = validate(data, setInvalidFields);
     if (invalids === 0) {
+      dispatch(showModal({ isShowModal: true, modalChildren: <Loading /> }));
       const rs = await apiLogin(data);
-      console.log('res', rs);
+      dispatch(showModal({ isShowModal: false, modalChildren: null }));
       if (rs.status) {
         const { accessToken, maNv, role, refreshToken, hoTen } = rs.data;
         dispatch(

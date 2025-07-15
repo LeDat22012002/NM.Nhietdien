@@ -2,7 +2,7 @@ import icons from '../../ultils/icons';
 import avatar from '../../assets/image/account.png';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { apiLogout } from '../../apis/user';
+// import { apiLogout } from '../../apis/user';
 import { toast } from 'react-toastify';
 import path from '../../ultils/path';
 import { FaMessage } from 'react-icons/fa6';
@@ -12,23 +12,19 @@ import { navigation } from '../../ultils/contain';
 import { clsx } from 'clsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentNav } from '../../store/currentNav/navSlice';
+import { logout } from '../../store/user/userSlice';
 const { IoMdMenu } = icons;
 const Header = ({ onToggleSidebar }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isShowOption, setIsShowOption] = useState(false);
-  const { current, refreshtoken } = useSelector((state) => state.user);
+  const { current } = useSelector((state) => state.user);
   // console.log('daaa', refreshToken);
   const { currentNav } = useSelector((state) => state.nav);
   const handleLogout = async () => {
-    const rs = await apiLogout(refreshtoken);
-    if (rs?.status) {
-      toast.success(rs?.message);
-      localStorage.clear();
-      navigate(`${path.LOGIN}`);
-    } else {
-      toast.error('Đã có lỗi xảy ra!');
-    }
+    dispatch(logout());
+    navigate(`${path.LOGIN}`);
+    toast.success('Logout thành công !');
   };
   const handleActive = (value) => {
     dispatch(setCurrentNav(value));

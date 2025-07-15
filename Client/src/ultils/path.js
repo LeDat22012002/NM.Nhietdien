@@ -4,8 +4,14 @@ const path = {
   // Layout
   LAYOUT: 'layout',
   THONGKE: 'thongke',
-  BM_11_QT_05_08: 'BM.11/QT.05.08',
-  BM_10_QT_05_08: 'BM.10/QT.05.08',
+  // Turbine
+  TB_BM1: 'TB_BM1/:id',
+  TB_BM3: 'TB_BM3/:id',
+  TB_BM2: 'TB_BM2/:id',
+  // CDQ
+  CDQ_BM1: 'CDQ_BM1/:id',
+
+  // user
   REGISTER: 'register',
   ALL_USERS: 'all_user',
 };

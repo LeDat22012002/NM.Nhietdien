@@ -52,11 +52,15 @@ const instance = axios.create({
 // Add a request interceptor
 instance.interceptors.request.use(
   function (config) {
-    const accessToken = localStorage.getItem('accessToken');
-    if (accessToken) {
-      config.headers.Authorization = `Bearer ${accessToken}`;
+    let localStorageData = window.localStorage.getItem('persist:NMCD/user');
+    if (localStorageData && typeof localStorageData === 'string') {
+      localStorageData = JSON.parse(localStorageData);
+      const accessToken = JSON.parse(localStorageData?.token);
+      config.headers = { Authorization: `Bearer ${accessToken}` };
+      return config;
+    } else {
+      return config;
     }
-    return config;
   },
   function (error) {
     return Promise.reject(error);

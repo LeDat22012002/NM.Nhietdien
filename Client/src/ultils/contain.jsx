@@ -1,8 +1,6 @@
 import icons from './icons';
 import path from './path';
 const {
-  FaUser,
-  RiProductHuntLine,
   TbCircleNumber1Filled,
   TbCircleNumber2Filled,
   TbCircleNumber3Filled,
@@ -47,7 +45,7 @@ export const HomeSidebar = (current) => [
       {
         text: 'Thống kê',
         icon: <TbHexagonNumber1 size={20} />,
-        path: `/${path.LAYOUT}/${path.BM_10_QT_05_08}`,
+        path: `hehehehrhr`,
       },
     ],
   },
@@ -179,7 +177,7 @@ export const NHLBSidebar = () => [
           {
             text: 'Nồi hơi CDQ 1',
             icon: <TbCircleNumber1Filled size={20} />,
-            path: '/lo-cao-2/cam-bien',
+            path: ``,
           },
           {
             text: 'Nồi hơi CDQ 2',
@@ -202,11 +200,11 @@ export const NHLBSidebar = () => [
     icon: <TbCircleNumber2Filled size={20} />,
     submenu: [
       {
-        text: 'Nồi hơi,lọc bụi 1 ',
+        text: 'Nồi hơi lọc bụi  ',
         icon: <TbHexagonNumber1 size={20} />,
         children: [
           {
-            text: 'Nồi hơi nhiệt dư 1',
+            text: 'Nồi hơi lọc bụi 1',
             icon: <TbCircleDashedNumber1 size={20} />,
             children: [
               {
@@ -214,23 +212,179 @@ export const NHLBSidebar = () => [
                 path: '/Mayphat/BM/log2',
                 icon: <IoRadioButtonOn size={20} />,
               },
-            ],
-          },
-          {
-            text: 'Lọc bụi khu lưu huỳnh 1',
-            icon: <TbCircleDashedNumber2 size={20} />,
-            children: [
               {
                 text: 'BM.15-QT.05.08',
+                path: '/Mayphat/BM/log2',
+                icon: <IoRadioButtonOn size={20} />,
+              },
+              {
+                text: 'BM.16-QT.05.08',
                 path: '/Mayphat/BM/log2',
                 icon: <IoRadioButtonOn size={20} />,
               },
             ],
           },
           {
-            text: 'Quạt hút nồi hơi nhiệt dư 1',
+            text: 'Nồi hơi lọc bụi 2',
+            icon: <TbCircleDashedNumber2 size={20} />,
+            children: [
+              {
+                text: 'BM.14-QT.05.08',
+                path: '/Mayphat/BM/log2',
+                icon: <IoRadioButtonOn size={20} />,
+              },
+              {
+                text: 'BM.15-QT.05.08',
+                path: '/Mayphat/BM/log2',
+                icon: <IoRadioButtonOn size={20} />,
+              },
+              {
+                text: 'BM.16-QT.05.08',
+                path: '/Mayphat/BM/log2',
+                icon: <IoRadioButtonOn size={20} />,
+              },
+            ],
+          },
+          {
+            text: 'Nồi hơi lọc bụi 3',
             icon: <TbCircleDashedNumber3 size={20} />,
             children: [
+              {
+                text: 'BM.14-QT.05.08',
+                path: '/Mayphat/BM/log2',
+                icon: <IoRadioButtonOn size={20} />,
+              },
+              {
+                text: 'BM.15-QT.05.08',
+                path: '/Mayphat/BM/log2',
+                icon: <IoRadioButtonOn size={20} />,
+              },
+              {
+                text: 'BM.16-QT.05.08',
+                path: '/Mayphat/BM/log2',
+                icon: <IoRadioButtonOn size={20} />,
+              },
+            ],
+          },
+          {
+            text: 'Nồi hơi lọc bụi 4',
+            icon: <TbCircleDashedNumber4 size={20} />,
+            children: [
+              {
+                text: 'BM.14-QT.05.08',
+                path: '/Mayphat/BM/log2',
+                icon: <IoRadioButtonOn size={20} />,
+              },
+              {
+                text: 'BM.15-QT.05.08',
+                path: '/Mayphat/BM/log2',
+                icon: <IoRadioButtonOn size={20} />,
+              },
+              {
+                text: 'BM.16-QT.05.08',
+                path: '/Mayphat/BM/log2',
+                icon: <IoRadioButtonOn size={20} />,
+              },
+            ],
+          },
+          {
+            text: 'Nồi hơi lọc bụi 5',
+            icon: <TbCircleDashedNumber5 size={20} />,
+            children: [
+              {
+                text: 'BM.14-QT.05.08',
+                path: '/Mayphat/BM/log2',
+                icon: <IoRadioButtonOn size={20} />,
+              },
+              {
+                text: 'BM.15-QT.05.08',
+                path: '/Mayphat/BM/log2',
+                icon: <IoRadioButtonOn size={20} />,
+              },
+              {
+                text: 'BM.16-QT.05.08',
+                path: '/Mayphat/BM/log2',
+                icon: <IoRadioButtonOn size={20} />,
+              },
+            ],
+          },
+          {
+            text: 'Nồi hơi lọc bụi 6',
+            icon: <TbCircleDashedNumber6 size={20} />,
+            children: [
+              {
+                text: 'BM.14-QT.05.08',
+                path: '/Mayphat/BM/log2',
+                icon: <IoRadioButtonOn size={20} />,
+              },
+              {
+                text: 'BM.15-QT.05.08',
+                path: '/Mayphat/BM/log2',
+                icon: <IoRadioButtonOn size={20} />,
+              },
+              {
+                text: 'BM.16-QT.05.08',
+                path: '/Mayphat/BM/log2',
+                icon: <IoRadioButtonOn size={20} />,
+              },
+            ],
+          },
+          {
+            text: 'Nồi hơi lọc bụi 7',
+            icon: <TbCircleDashedNumber7 size={20} />,
+            children: [
+              {
+                text: 'BM.14-QT.05.08',
+                path: '/Mayphat/BM/log2',
+                icon: <IoRadioButtonOn size={20} />,
+              },
+              {
+                text: 'BM.15-QT.05.08',
+                path: '/Mayphat/BM/log2',
+                icon: <IoRadioButtonOn size={20} />,
+              },
+              {
+                text: 'BM.16-QT.05.08',
+                path: '/Mayphat/BM/log2',
+                icon: <IoRadioButtonOn size={20} />,
+              },
+            ],
+          },
+          {
+            text: 'Nồi hơi lọc bụi 8',
+            icon: <TbCircleDashedNumber8 size={20} />,
+            children: [
+              {
+                text: 'BM.14-QT.05.08',
+                path: '/Mayphat/BM/log2',
+                icon: <IoRadioButtonOn size={20} />,
+              },
+              {
+                text: 'BM.15-QT.05.08',
+                path: '/Mayphat/BM/log2',
+                icon: <IoRadioButtonOn size={20} />,
+              },
+              {
+                text: 'BM.16-QT.05.08',
+                path: '/Mayphat/BM/log2',
+                icon: <IoRadioButtonOn size={20} />,
+              },
+            ],
+          },
+          {
+            text: 'Nồi hơi lọc bụi 9',
+            icon: <TbCircleDashedNumber9 size={20} />,
+            children: [
+              {
+                text: 'BM.14-QT.05.08',
+                path: '/Mayphat/BM/log2',
+                icon: <IoRadioButtonOn size={20} />,
+              },
+              {
+                text: 'BM.15-QT.05.08',
+                path: '/Mayphat/BM/log2',
+                icon: <IoRadioButtonOn size={20} />,
+              },
               {
                 text: 'BM.16-QT.05.08',
                 path: '/Mayphat/BM/log2',
@@ -241,37 +395,67 @@ export const NHLBSidebar = () => [
         ],
       },
       {
-        text: 'Nồi hơi lọc bụi 2',
+        text: 'Nồi hơi khí than',
         icon: <TbHexagonNumber2 size={20} />,
         children: [
           {
-            text: 'Nồi hơi nhiệt dư 2',
+            text: 'Nồi hơi khí than 1',
             icon: <TbCircleDashedNumber1 size={20} />,
             children: [
               {
-                text: 'BM.14-QT.05.08',
+                text: 'BM.19-QT.05.08',
+                path: '/Mayphat/BM/log2',
+                icon: <IoRadioButtonOn size={20} />,
+              },
+              {
+                text: 'BM.20-QT.05.08',
+                path: '/Mayphat/BM/log2',
+                icon: <IoRadioButtonOn size={20} />,
+              },
+              {
+                text: 'BM.21-QT.05.08',
                 path: '/Mayphat/BM/log2',
                 icon: <IoRadioButtonOn size={20} />,
               },
             ],
           },
           {
-            text: 'Lọc bụi khu lưu huỳnh 2',
+            text: 'Nồi hơi khí than 2',
             icon: <TbCircleDashedNumber2 size={20} />,
             children: [
               {
-                text: 'BM.15-QT.05.08',
+                text: 'BM.19-QT.05.08',
+                path: '/Mayphat/BM/log2',
+                icon: <IoRadioButtonOn size={20} />,
+              },
+              {
+                text: 'BM.20-QT.05.08',
+                path: '/Mayphat/BM/log2',
+                icon: <IoRadioButtonOn size={20} />,
+              },
+              {
+                text: 'BM.21-QT.05.08',
                 path: '/Mayphat/BM/log2',
                 icon: <IoRadioButtonOn size={20} />,
               },
             ],
           },
           {
-            text: 'Quạt hút nồi hơi nhiệt dư 2',
+            text: 'Nồi hơi khí than 3',
             icon: <TbCircleDashedNumber3 size={20} />,
             children: [
               {
-                text: 'BM.16-QT.05.08',
+                text: 'BM.19-QT.05.08',
+                path: '/Mayphat/BM/log2',
+                icon: <IoRadioButtonOn size={20} />,
+              },
+              {
+                text: 'BM.20-QT.05.08',
+                path: '/Mayphat/BM/log2',
+                icon: <IoRadioButtonOn size={20} />,
+              },
+              {
+                text: 'BM.21-QT.05.08',
                 path: '/Mayphat/BM/log2',
                 icon: <IoRadioButtonOn size={20} />,
               },
@@ -280,37 +464,52 @@ export const NHLBSidebar = () => [
         ],
       },
       {
-        text: 'Nồi hơi lọc bụi 3',
+        text: 'Nồi hơi CDQ',
         icon: <TbHexagonNumber3 size={20} />,
         children: [
           {
-            text: 'Nồi hơi nhiệt dư 3',
+            text: 'Nồi hơi CDQ 1',
             icon: <TbCircleDashedNumber1 size={20} />,
             children: [
               {
-                text: 'BM.14-QT.05.08',
+                text: 'BM.17-QT.05.08',
+                path: `/${path.LAYOUT}/${path.CDQ_BM1.replace(':id', '1')}`,
+                icon: <IoRadioButtonOn size={20} />,
+              },
+              {
+                text: 'BM.18-QT.05.08',
                 path: '/Mayphat/BM/log2',
                 icon: <IoRadioButtonOn size={20} />,
               },
             ],
           },
           {
-            text: 'Lọc bụi khu lưu huỳnh 3',
+            text: 'Nồi hơi CDQ 2',
             icon: <TbCircleDashedNumber2 size={20} />,
             children: [
               {
-                text: 'BM.15-QT.05.08',
+                text: 'BM.17-QT.05.08',
+                path: '/Mayphat/BM/log2',
+                icon: <IoRadioButtonOn size={20} />,
+              },
+              {
+                text: 'BM.18-QT.05.08',
                 path: '/Mayphat/BM/log2',
                 icon: <IoRadioButtonOn size={20} />,
               },
             ],
           },
           {
-            text: 'Quạt hút nồi hơi nhiệt dư 3',
+            text: 'Nồi hơi CDQ3',
             icon: <TbCircleDashedNumber3 size={20} />,
             children: [
               {
-                text: 'BM.16-QT.05.08',
+                text: 'BM.17-QT.05.08',
+                path: '/Mayphat/BM/log2',
+                icon: <IoRadioButtonOn size={20} />,
+              },
+              {
+                text: 'BM.18-QT.05.08',
                 path: '/Mayphat/BM/log2',
                 icon: <IoRadioButtonOn size={20} />,
               },
@@ -318,123 +517,123 @@ export const NHLBSidebar = () => [
           },
         ],
       },
-      {
-        text: 'Nồi hơi lọc bụi 4',
-        icon: <TbHexagonNumber4 size={20} />,
-        children: [
-          {
-            text: 'Nồi hơi nhiệt dư 4',
-            icon: <TbCircleDashedNumber1 size={20} />,
-            children: [
-              {
-                text: 'BM.14-QT.05.08',
-                path: '/Mayphat/BM/log2',
-                icon: <IoRadioButtonOn size={20} />,
-              },
-            ],
-          },
-          {
-            text: 'Lọc bụi khu lưu huỳnh 4',
-            icon: <TbCircleDashedNumber2 size={20} />,
-            children: [
-              {
-                text: 'BM.15-QT.05.08',
-                path: '/Mayphat/BM/log2',
-                icon: <IoRadioButtonOn size={20} />,
-              },
-            ],
-          },
-          {
-            text: 'Quạt hút nồi hơi nhiệt dư 4',
-            icon: <TbCircleDashedNumber3 size={20} />,
-            children: [
-              {
-                text: 'BM.16-QT.05.08',
-                path: '/Mayphat/BM/log2',
-                icon: <IoRadioButtonOn size={20} />,
-              },
-            ],
-          },
-        ],
-      },
-      {
-        text: 'Nồi hơi lọc bụi 5',
-        icon: <TbHexagonNumber5 size={20} />,
-        children: [
-          {
-            text: 'Nồi hơi nhiệt dư 5',
-            icon: <TbCircleDashedNumber1 size={20} />,
-            children: [
-              {
-                text: 'BM.14-QT.05.08',
-                path: '/Mayphat/BM/log2',
-                icon: <IoRadioButtonOn size={20} />,
-              },
-            ],
-          },
-          {
-            text: 'Lọc bụi khu lưu huỳnh 5',
-            icon: <TbCircleDashedNumber2 size={20} />,
-            children: [
-              {
-                text: 'BM.15-QT.05.08',
-                path: '/Mayphat/BM/log2',
-                icon: <IoRadioButtonOn size={20} />,
-              },
-            ],
-          },
-          {
-            text: 'Quạt hút nồi hơi nhiệt dư 5',
-            icon: <TbCircleDashedNumber3 size={20} />,
-            children: [
-              {
-                text: 'BM.16-QT.05.08',
-                path: '/Mayphat/BM/log2',
-                icon: <IoRadioButtonOn size={20} />,
-              },
-            ],
-          },
-        ],
-      },
-      {
-        text: 'Nồi hơi lọc bụi 6',
-        icon: <TbHexagonNumber6 size={20} />,
-        children: [
-          {
-            text: 'Nồi hơi nhiệt dư 6',
-            icon: <TbCircleDashedNumber1 size={20} />,
-            children: [
-              {
-                text: 'BM.14-QT.05.08',
-                path: '/Mayphat/BM/log2',
-                icon: <IoRadioButtonOn size={20} />,
-              },
-            ],
-          },
-          {
-            text: 'Lọc bụi khu lưu huỳnh 6',
-            icon: <TbCircleDashedNumber2 size={20} />,
-            children: [
-              {
-                text: 'BM.15-QT.05.08',
-                path: '/Mayphat/BM/log2',
-                icon: <IoRadioButtonOn size={20} />,
-              },
-            ],
-          },
-          {
-            text: 'Quạt hút nồi hơi nhiệt dư 6',
-            icon: <TbCircleDashedNumber3 size={20} />,
-            children: [
-              {
-                text: 'BM.16-QT.05.08',
-                path: '/Mayphat/BM/log2',
-                icon: <IoRadioButtonOn size={20} />,
-              },
-            ],
-          },
-        ],
-      },
+      // {
+      //   text: 'Nồi hơi lọc bụi 4',
+      //   icon: <TbHexagonNumber4 size={20} />,
+      //   children: [
+      //     {
+      //       text: 'Nồi hơi nhiệt dư 4',
+      //       icon: <TbCircleDashedNumber1 size={20} />,
+      //       children: [
+      //         {
+      //           text: 'BM.14-QT.05.08',
+      //           path: '/Mayphat/BM/log2',
+      //           icon: <IoRadioButtonOn size={20} />,
+      //         },
+      //       ],
+      //     },
+      //     {
+      //       text: 'Lọc bụi khu lưu huỳnh 4',
+      //       icon: <TbCircleDashedNumber2 size={20} />,
+      //       children: [
+      //         {
+      //           text: 'BM.15-QT.05.08',
+      //           path: '/Mayphat/BM/log2',
+      //           icon: <IoRadioButtonOn size={20} />,
+      //         },
+      //       ],
+      //     },
+      //     {
+      //       text: 'Quạt hút nồi hơi nhiệt dư 4',
+      //       icon: <TbCircleDashedNumber3 size={20} />,
+      //       children: [
+      //         {
+      //           text: 'BM.16-QT.05.08',
+      //           path: '/Mayphat/BM/log2',
+      //           icon: <IoRadioButtonOn size={20} />,
+      //         },
+      //       ],
+      //     },
+      //   ],
+      // },
+      // {
+      //   text: 'Nồi hơi lọc bụi 5',
+      //   icon: <TbHexagonNumber5 size={20} />,
+      //   children: [
+      //     {
+      //       text: 'Nồi hơi nhiệt dư 5',
+      //       icon: <TbCircleDashedNumber1 size={20} />,
+      //       children: [
+      //         {
+      //           text: 'BM.14-QT.05.08',
+      //           path: '/Mayphat/BM/log2',
+      //           icon: <IoRadioButtonOn size={20} />,
+      //         },
+      //       ],
+      //     },
+      //     {
+      //       text: 'Lọc bụi khu lưu huỳnh 5',
+      //       icon: <TbCircleDashedNumber2 size={20} />,
+      //       children: [
+      //         {
+      //           text: 'BM.15-QT.05.08',
+      //           path: '/Mayphat/BM/log2',
+      //           icon: <IoRadioButtonOn size={20} />,
+      //         },
+      //       ],
+      //     },
+      //     {
+      //       text: 'Quạt hút nồi hơi nhiệt dư 5',
+      //       icon: <TbCircleDashedNumber3 size={20} />,
+      //       children: [
+      //         {
+      //           text: 'BM.16-QT.05.08',
+      //           path: '/Mayphat/BM/log2',
+      //           icon: <IoRadioButtonOn size={20} />,
+      //         },
+      //       ],
+      //     },
+      //   ],
+      // },
+      // {
+      //   text: 'Nồi hơi lọc bụi 6',
+      //   icon: <TbHexagonNumber6 size={20} />,
+      //   children: [
+      //     {
+      //       text: 'Nồi hơi nhiệt dư 6',
+      //       icon: <TbCircleDashedNumber1 size={20} />,
+      //       children: [
+      //         {
+      //           text: 'BM.14-QT.05.08',
+      //           path: '/Mayphat/BM/log2',
+      //           icon: <IoRadioButtonOn size={20} />,
+      //         },
+      //       ],
+      //     },
+      //     {
+      //       text: 'Lọc bụi khu lưu huỳnh 6',
+      //       icon: <TbCircleDashedNumber2 size={20} />,
+      //       children: [
+      //         {
+      //           text: 'BM.15-QT.05.08',
+      //           path: '/Mayphat/BM/log2',
+      //           icon: <IoRadioButtonOn size={20} />,
+      //         },
+      //       ],
+      //     },
+      //     {
+      //       text: 'Quạt hút nồi hơi nhiệt dư 6',
+      //       icon: <TbCircleDashedNumber3 size={20} />,
+      //       children: [
+      //         {
+      //           text: 'BM.16-QT.05.08',
+      //           path: '/Mayphat/BM/log2',
+      //           icon: <IoRadioButtonOn size={20} />,
+      //         },
+      //       ],
+      //     },
+      //   ],
+      // },
     ],
   },
 ];
@@ -487,17 +686,17 @@ export const TBMPSidebar = () => [
             children: [
               {
                 text: 'BM.09-QT.05.08',
-                path: '/Mayphat/BM/log1',
+                path: `/${path.LAYOUT}/${path.TB_BM1.replace(':id', '1')}`,
                 icon: <IoRadioButtonOn size={16} />,
               },
               {
                 text: 'BM.10-QT.05.08',
-                path: '/Mayphat/BM/log2',
+                path: `/${path.LAYOUT}/${path.TB_BM2.replace(':id', '1')}`,
                 icon: <IoRadioButtonOn size={16} />,
               },
               {
                 text: 'BM.11-QT.05.08',
-                path: `/${path.LAYOUT}/${path.BM_11_QT_05_08}`,
+                path: `/${path.LAYOUT}/${path.TB_BM3.replace(':id', '1')}`,
                 icon: <IoRadioButtonOn size={16} />,
               },
             ],
@@ -540,7 +739,7 @@ export const TBMPSidebar = () => [
               },
               {
                 text: 'BM.11-QT.05.08',
-                path: '/Mayphat/BM/log2',
+                path: `/${path.LAYOUT}/${path.TB_BM3.replace(':id', '2')}`,
                 icon: <IoRadioButtonOn size={16} />,
               },
             ],

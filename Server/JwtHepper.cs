@@ -10,7 +10,7 @@ public static class JwtHelper
         var claims = new[]
         {
             new Claim(ClaimTypes.Name, manv),
-             new Claim(ClaimTypes.Role, role.ToString())
+            new Claim(ClaimTypes.Role, role.ToString())
         };
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
@@ -20,7 +20,7 @@ public static class JwtHelper
             issuer,
             issuer,
             claims,
-            expires: DateTime.UtcNow.AddSeconds(minutes),
+            expires: DateTime.UtcNow.AddMinutes(minutes),
             signingCredentials: creds);
 
         return new JwtSecurityTokenHandler().WriteToken(token);

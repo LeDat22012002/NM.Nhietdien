@@ -11,4 +11,18 @@ export { default as MenuItem } from './MenuItem/menuItem';
 
 export { default as FilterTime } from './FilterTime/FilterTime';
 
+// Common
+
+export { default as Loading } from './Common/Loading';
+
+export { default as Modal } from './Common/Loading';
+
+// Turbine
+export { default as BM1 } from './Tuabin/Turbine/BM1';
+
 export { default as BM3 } from './Tuabin/Turbine/BM3';
+
+export { default as BM2 } from './Tuabin/Turbine/BM2';
+
+// CDQ
+export { default as BM1_CDQ } from './NoiHoi_LocBui/NoiHoi_CDQ/BM1_CDQ';

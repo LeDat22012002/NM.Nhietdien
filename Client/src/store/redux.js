@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import storage from 'redux-persist/lib/storage';
 import userSlice from './user/userSlice';
+import loadingSlice from './loading/loadingSlice';
 import navReducer from './currentNav/navSlice';
 import {
   persistStore,
@@ -31,6 +32,7 @@ const navConfig = {
 
 export const store = configureStore({
   reducer: {
+    loading: loadingSlice,
     user: persistReducer(userConfig, userSlice),
     nav: persistReducer(navConfig, navReducer),
   },
