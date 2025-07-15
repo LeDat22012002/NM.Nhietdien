@@ -8,3 +8,5 @@ export * from './Tuabin/Tuabin2/TB2_BM3';
 // NoiHoi_CDQ
 
 export * from './NoiHoi_CDQ/CDQ1/CDQ1_BM1';
+export * from './NoiHoi_CDQ/CDQ2/CDQ2_BM';
+export * from './NoiHoi_CDQ/CDQ12/CDQ12_BM2';

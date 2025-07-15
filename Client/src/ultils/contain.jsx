@@ -45,7 +45,7 @@ export const HomeSidebar = (current) => [
       {
         text: 'Thống kê',
         icon: <TbHexagonNumber1 size={20} />,
-        path: `hehehehrhr`,
+        path: `/${path.LAYOUT}/${path.THONGKE}`,
       },
     ],
   },
@@ -478,7 +478,7 @@ export const NHLBSidebar = () => [
               },
               {
                 text: 'BM.18-QT.05.08',
-                path: '/Mayphat/BM/log2',
+                path: `/${path.LAYOUT}/${path.CDQ_BM2.replace(':id', '1')}`,
                 icon: <IoRadioButtonOn size={20} />,
               },
             ],
@@ -489,12 +489,12 @@ export const NHLBSidebar = () => [
             children: [
               {
                 text: 'BM.17-QT.05.08',
-                path: '/Mayphat/BM/log2',
+                path: `/${path.LAYOUT}/${path.CDQ_BM1.replace(':id', '2')}`,
                 icon: <IoRadioButtonOn size={20} />,
               },
               {
                 text: 'BM.18-QT.05.08',
-                path: '/Mayphat/BM/log2',
+                path: `/${path.LAYOUT}/${path.CDQ_BM2.replace(':id', '2')}`,
                 icon: <IoRadioButtonOn size={20} />,
               },
             ],
@@ -505,12 +505,12 @@ export const NHLBSidebar = () => [
             children: [
               {
                 text: 'BM.17-QT.05.08',
-                path: '/Mayphat/BM/log2',
+                path: `/${path.LAYOUT}/${path.CDQ_BM1.replace(':id', '3')}`,
                 icon: <IoRadioButtonOn size={20} />,
               },
               {
                 text: 'BM.18-QT.05.08',
-                path: '/Mayphat/BM/log2',
+                path: `/${path.LAYOUT}/${path.CDQ_BM2.replace(':id', '3')}`,
                 icon: <IoRadioButtonOn size={20} />,
               },
             ],

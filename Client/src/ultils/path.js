@@ -10,6 +10,7 @@ const path = {
   TB_BM2: 'TB_BM2/:id',
   // CDQ
   CDQ_BM1: 'CDQ_BM1/:id',
+  CDQ_BM2: 'CDQ_BM2/:id',
 
   // user
   REGISTER: 'register',

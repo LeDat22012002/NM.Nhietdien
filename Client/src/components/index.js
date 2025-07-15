@@ -26,3 +26,4 @@ export { default as BM2 } from './Tuabin/Turbine/BM2';
 
 // CDQ
 export { default as BM1_CDQ } from './NoiHoi_LocBui/NoiHoi_CDQ/BM1_CDQ';
+export { default as BM2_CDQ } from './NoiHoi_LocBui/NoiHoi_CDQ/BM2_CDQ';

@@ -343,7 +343,7 @@ const BM_11_QT_05_08 = ({ apiGet, apiExportExcel, title, turbineIndex }) => {
                 ))}
               </tr>
             </thead>
-            <tbody className="text-sm text-gray-700 border border-gray-700">
+            <tbody className="text-[10px] text-gray-700 border border-gray-700">
               {data1?.map((row, index) => (
                 <tr key={index}>
                   <td

@@ -158,10 +158,18 @@ namespace Server.Controllers
             workbook.SaveAs(stream);
             stream.Seek(0, SeekOrigin.Begin);
 
-            string filename = $"BM1_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx";
-            return File(stream.ToArray(),
-                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                filename);
+            var content = stream.ToArray();
+           var fileName = $"BM1_TB1_{DateTime.Now:yyyy-MM-dd}.xlsx";
+
+           
+            Response.Headers["Content-Disposition"] = new System.Net.Mime.ContentDisposition
+            {
+                FileName = fileName,
+                Inline = false
+            }.ToString();
+
+           
+            return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
         }
 
 
