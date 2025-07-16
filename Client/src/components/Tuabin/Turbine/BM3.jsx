@@ -4,6 +4,7 @@ import logo from '../../../assets/image/Logo.png';
 import { FilterTime } from '../../../components';
 import { toast } from 'react-toastify';
 import clsx from 'clsx';
+import { ImFileExcel } from 'react-icons/im';
 
 const row1 = [
   {
@@ -238,10 +239,11 @@ const BM_11_QT_05_08 = ({ apiGet, apiExportExcel, title, turbineIndex }) => {
         </div>
         <div>
           <button
-            className="px-4 py-2 text-sm font-semibold text-white transition bg-green-600 rounded hover:bg-green-700"
             onClick={handleExportExcel}
+            className="px-4 py-2 flex items-center gap-1 text-[14px] text-white font-semibold transition duration-200 bg-green-800 rounded hover:bg-green-900"
           >
-            Xuất Excel
+            <ImFileExcel />
+            <span> Xuất Excel</span>
           </button>
         </div>
       </div>
@@ -253,7 +255,13 @@ const BM_11_QT_05_08 = ({ apiGet, apiExportExcel, title, turbineIndex }) => {
       </div>
       <div className="max-w-full overflow-x-auto overflow-y-auto border border-gray-300 rounded scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
         <div className="w-[1000px] h-[610px]">
-          <table className="table-fixed border border-collapse w-full text-[10px]">
+          <table
+            className="table-fixed w-full text-[10px]"
+            style={{
+              borderCollapse: 'separate',
+              borderSpacing: 0,
+            }}
+          >
             <colgroup>
               {Array.from({ length: 52 }).map((_, i) => (
                 <col key={i} style={{ width: '60px' }} />
@@ -267,10 +275,8 @@ const BM_11_QT_05_08 = ({ apiGet, apiExportExcel, title, turbineIndex }) => {
                     colSpan={item.colSpan}
                     rowSpan={item.rowSpan}
                     className={clsx(
-                      'sticky top-[0px] bg-white min-w-[50px] px-1 py-2 text-center align-middle h-[50px]',
-                      'border-l border-gray-700 shadow-[inset_0_-1px_0_#4b5563]',
-                      index === 0 &&
-                        'left-0 z-[60] shadow-[inset_-1px_0_0_#4b5563]'
+                      'sticky top-0 z-[80] bg-white px-1 py-1 text-center align-middle h-[50px] min-w-[60px] border border-gray-700',
+                      index === 0 && 'left-0 z-[90] bg-yellow-300'
                     )}
                   >
                     {item.title}
@@ -284,7 +290,7 @@ const BM_11_QT_05_08 = ({ apiGet, apiExportExcel, title, turbineIndex }) => {
                     key={index}
                     colSpan={item.colSpan}
                     className={clsx(
-                      'sticky top-[50px] z-10 bg-white h-[50px]  min-w-[50px] max-w-[50px] px-1 py-1 text-center align-middle',
+                      'sticky top-[50px] z-10 bg-white h-[50px] min-w-[50px] max-w-[50px] px-1 py-1 text-center align-middle',
                       'border border-gray-700'
                     )}
                   >
@@ -298,7 +304,7 @@ const BM_11_QT_05_08 = ({ apiGet, apiExportExcel, title, turbineIndex }) => {
                     key={index}
                     colSpan={col.colSpan}
                     className={clsx(
-                      'sticky top-[95px] z-20 bg-white',
+                      'sticky top-[100px] z-20 bg-white',
                       'min-w-[60px] max-w-[60px] px-1 py-1 text-[10px] text-center align-middle',
                       '[writing-mode:vertical-rl] rotate-180 truncate',
                       'shadow-[inset_0_-1px_0_#4b5563] border border-gray-700'
@@ -314,10 +320,8 @@ const BM_11_QT_05_08 = ({ apiGet, apiExportExcel, title, turbineIndex }) => {
                     key={index}
                     colSpan={col.colSpan}
                     className={clsx(
-                      'sticky top-[231px] py-1 text-[10px] font-semibold text-center bg-white',
-                      'border border-gray-700 shadow-[inset_0_1px_0_#4b5563]',
-                      index === 0 &&
-                        'left-0 z-[60] shadow-[inset_-1px_0_0_#4b5563] border-r border-gray-700'
+                      'sticky top-[237px] z-[50] bg-white px-1 py-1 text-center align-middle h-[30px] min-w-[60px] border border-gray-700 text-[10px] font-semibold',
+                      index === 0 && 'left-0 z-[60] bg-yellow-300'
                     )}
                   >
                     {col.title}

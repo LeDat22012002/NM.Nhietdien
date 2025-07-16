@@ -127,48 +127,48 @@ const row2 = [
 
 // Row3
 const row3 = [
-  { title: 'Dịch trục A', colSpan: 1 },
-  { title: 'Dịch trục B', colSpan: 1 },
-  { title: 'Giãn nở rotor', colSpan: 1 },
-  { title: 'Giãn nở thành A', colSpan: 1 },
-  { title: 'Giãn nở thành B', colSpan: 1 },
-  { title: 'Độ rung gối 1', colSpan: 1 },
-  { title: 'Độ rung gối 1B', colSpan: 1 },
-  { title: 'Độ rung gối 2', colSpan: 1 },
-  { title: 'Độ rung gối 2B', colSpan: 1 },
-  { title: 'Độ rung gối 3', colSpan: 1 },
-  { title: 'Độ rung gối 3B', colSpan: 1 },
-  { title: 'Độ rung gối 4', colSpan: 1 },
-  { title: 'Độ rung gối 4B', colSpan: 1 },
-  { title: 'Độ rung gối 5', colSpan: 1 },
-  { title: 'Tº dầu  làm việc', colSpan: 1 },
-  { title: 'Tº dầu hồi gối 1 max', colSpan: 1 },
-  { title: 'Tº dầu hồi gối 2 max', colSpan: 1 },
-  { title: 'Tº dầu hồi gối 3 max', colSpan: 1 },
-  { title: 'Tº dầu hồi gối 4 max', colSpan: 1 },
-  { title: 'Tº dầu hồi gối 5', colSpan: 1 },
-  { title: 'Tº bạc chặn phía trước max', colSpan: 1 },
-  { title: 'Tº bạc chặn phía sau max1', colSpan: 1 },
-  { title: 'Tº bạc chặn phía sau max2', colSpan: 1 },
-  { title: 'Tº bạc chặn phía sau max3', colSpan: 1 },
-  { title: 'Tº bạc đỡ gối 1 max', colSpan: 1 },
-  { title: 'Tº bạc đỡ gối 2 max', colSpan: 1 },
-  { title: 'Tº bạc đỡ gối 3 max', colSpan: 1 },
-  { title: 'Tº bạc đỡ gối 4 max', colSpan: 1 },
-  { title: 'Tº bạc đỡ gối 5', colSpan: 1 },
-  { title: 'L bình ngưng', colSpan: 1 },
-  { title: 'Tº nước ngưng', colSpan: 1 },
-  { title: 'I bơm số... ', colSpan: 1 },
-  { title: 'I bơm số ...', colSpan: 1 },
-  { title: 'P đầu ra bơm ngưng', colSpan: 1 },
-  { title: 'P nước tuần hoàn đầu vào max', colSpan: 1 },
-  { title: 'Tº nước tuần hoàn đầu vào  trái', colSpan: 1 },
-  { title: 'Tº nước tuần hoàn đầu ra trái', colSpan: 1 },
-  { title: 'Tº nước tuần hoàn đầu vào phải', colSpan: 1 },
-  { title: 'Tº nước tuần hoàn đầu ra phải', colSpan: 1 },
+  { title: 'Dịch trục A', colSpan: 1, vertical: true },
+  { title: 'Dịch trục B', colSpan: 1, vertical: true },
+  { title: 'Giãn nở rotor', colSpan: 1, vertical: true },
+  { title: 'Giãn nở thành A', colSpan: 1, vertical: true },
+  { title: 'Giãn nở thành B', colSpan: 1, vertical: true },
+  { title: 'Độ rung gối 1', colSpan: 1, vertical: true },
+  { title: 'Độ rung gối 1B', colSpan: 1, vertical: true },
+  { title: 'Độ rung gối 2', colSpan: 1, vertical: true },
+  { title: 'Độ rung gối 2B', colSpan: 1, vertical: true },
+  { title: 'Độ rung gối 3', colSpan: 1, vertical: true },
+  { title: 'Độ rung gối 3B', colSpan: 1, vertical: true },
+  { title: 'Độ rung gối 4', colSpan: 1, vertical: true },
+  { title: 'Độ rung gối 4B', colSpan: 1, vertical: true },
+  { title: 'Độ rung gối 5', colSpan: 1, vertical: true },
+  { title: 'Tº dầu  làm việc', colSpan: 1, vertical: true },
+  { title: 'Tº dầu hồi gối 1 max', colSpan: 1, vertical: true },
+  { title: 'Tº dầu hồi gối 2 max', colSpan: 1, vertical: true },
+  { title: 'Tº dầu hồi gối 3 max', colSpan: 1, vertical: true },
+  { title: 'Tº dầu hồi gối 4 max', colSpan: 1, vertical: true },
+  { title: 'Tº dầu hồi gối 5', colSpan: 1, vertical: true },
+  { title: 'Tº bạc chặn phía trước max', colSpan: 1, vertical: true },
+  { title: 'Tº bạc chặn phía sau max1', colSpan: 1, vertical: true },
+  { title: 'Tº bạc chặn phía sau max2', colSpan: 1, vertical: true },
+  { title: 'Tº bạc chặn phía sau max3', colSpan: 1, vertical: true },
+  { title: 'Tº bạc đỡ gối 1 max', colSpan: 1, vertical: true },
+  { title: 'Tº bạc đỡ gối 2 max', colSpan: 1, vertical: true },
+  { title: 'Tº bạc đỡ gối 3 max', colSpan: 1, vertical: true },
+  { title: 'Tº bạc đỡ gối 4 max', colSpan: 1, vertical: true },
+  { title: 'Tº bạc đỡ gối 5', colSpan: 1, vertical: true },
+  { title: 'L bình ngưng', colSpan: 1, vertical: true },
+  { title: 'Tº nước ngưng', colSpan: 1, vertical: true },
+  { title: 'I bơm số... ', colSpan: 1, vertical: true },
+  { title: 'I bơm số ...', colSpan: 1, vertical: true },
+  { title: 'P đầu ra bơm ngưng', colSpan: 1, vertical: true },
+  { title: 'P nước tuần hoàn đầu vào max', colSpan: 1, vertical: true },
+  { title: 'Tº nước tuần hoàn đầu vào  trái', colSpan: 1, vertical: true },
+  { title: 'Tº nước tuần hoàn đầu ra trái', colSpan: 1, vertical: true },
+  { title: 'Tº nước tuần hoàn đầu vào phải', colSpan: 1, vertical: true },
+  { title: 'Tº nước tuần hoàn đầu ra phải', colSpan: 1, vertical: true },
 ];
 const row4 = [
-  { title: '', colSpan: 1 },
+  { title: 'h', colSpan: 1 },
   { title: 'mm', colSpan: 1 },
   { title: 'mm', colSpan: 1 },
   { title: 'mm', colSpan: 1 },
@@ -331,13 +331,19 @@ const TB_BM2 = ({ apiGet, title, apiExportExcel, turbineIndex }) => {
       </div>
       <div className="max-w-full overflow-x-auto overflow-y-auto border border-gray-300 rounded scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
         <div className="w-[1000px] h-[610px]">
-          <table className="table-fixed border border-collapse w-full text-[10px]">
+          <table
+            className="table-fixed w-full text-[10px]"
+            style={{
+              borderCollapse: 'separate',
+              borderSpacing: 0,
+            }}
+          >
             <colgroup>
               {Array.from({ length: 49 }).map((_, i) => (
                 <col key={i} style={{ width: '60px' }} />
               ))}
             </colgroup>
-            <thead className="text-sm text-gray-700 border border-gray-700">
+            <thead className="text-sm text-gray-700">
               <tr>
                 {row1?.map((group, index) => (
                   <th
@@ -345,10 +351,8 @@ const TB_BM2 = ({ apiGet, title, apiExportExcel, turbineIndex }) => {
                     colSpan={group.colSpan}
                     rowSpan={group.rowSpan}
                     className={clsx(
-                      'sticky top-[0px] bg-white min-w-[50px] px-1 py-2 text-center align-middle h-[50px]',
-                      'border-l border-gray-700 shadow-[inset_0_-1px_0_#4b5563]',
-                      index === 0 &&
-                        'left-0 z-[60] shadow-[inset_-1px_0_0_#4b5563]'
+                      'sticky top-0 z-[80] bg-white px-1 py-1 text-center align-middle h-[40px] min-w-[60px] border border-gray-700',
+                      index === 0 && 'left-0 z-[90] bg-yellow-300'
                     )}
                   >
                     {group.title}
@@ -362,10 +366,9 @@ const TB_BM2 = ({ apiGet, title, apiExportExcel, turbineIndex }) => {
                     colSpan={item.colSpan}
                     rowSpan={item.rowSpan}
                     className={clsx(
-                      'sticky top-[50px] z-10 bg-white  min-w-[50px] max-w-[50px] px-1 py-1 text-center align-middle',
-                      'border border-gray-700',
+                      'sticky top-[40px] z-[70] bg-white px-1 text-center align-middle h-[40px] min-w-[60px] border border-gray-700',
                       item.vertical
-                        ? 'text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold overflow-hidden text-ellipsis whitespace-nowrap leading-none border border-b-gray-700'
+                        ? '[writing-mode:vertical-rl] px-6 rotate-180 text-[10px] font-semibold leading-none break-words overflow-visible whitespace-normal'
                         : 'text-[14px] font-bold'
                     )}
                   >
@@ -380,10 +383,11 @@ const TB_BM2 = ({ apiGet, title, apiExportExcel, turbineIndex }) => {
                     key={index}
                     colSpan={col.colSpan}
                     className={clsx(
-                      'sticky top-[95px] z-20 bg-white',
-                      'min-w-[60px] max-w-[60px] px-1 py-1 text-[10px] text-center align-middle',
-                      '[writing-mode:vertical-rl] rotate-180 truncate',
-                      'shadow-[inset_0_-1px_0_#4b5563] border border-gray-700'
+                      'sticky top-[160px] z-[60] bg-white px-6 text-center align-middle h-[150px] min-w-[60px] border border-gray-700 ',
+                      col.vertical
+                        ? '[writing-mode:vertical-rl] rotate-180 text-[10px] font-semibold leading-none break-words overflow-visible whitespace-normal'
+                        : 'text-[14px] font-bold'
+                      // index === 0 && 'left-0 z-[70] bg-yellow-300'
                     )}
                   >
                     {col.title}
@@ -391,20 +395,20 @@ const TB_BM2 = ({ apiGet, title, apiExportExcel, turbineIndex }) => {
                 ))}
               </tr>
 
-              {row4?.map((col, index) => (
-                <th
-                  key={index}
-                  colSpan={col?.colSpan}
-                  className={clsx(
-                    'sticky top-[317px] py-1 text-[10px] font-semibold text-center bg-white',
-                    'border border-gray-700 shadow-[inset_0_1px_0_#4b5563]',
-                    index === 0 &&
-                      'left-0 z-[60] shadow-[inset_-1px_0_0_#4b5563] border-r border-gray-700'
-                  )}
-                >
-                  {col.title}
-                </th>
-              ))}
+              <tr>
+                {row4?.map((col, index) => (
+                  <th
+                    key={index}
+                    colSpan={col?.colSpan}
+                    className={clsx(
+                      'sticky top-[310px] z-[50] bg-white px-1 py-1 text-center align-middle h-[30px] min-w-[60px] border border-gray-700 text-[10px] font-semibold',
+                      index === 0 && 'left-0 z-[60] bg-yellow-300'
+                    )}
+                  >
+                    {col.title}
+                  </th>
+                ))}
+              </tr>
             </thead>
             <tbody className="mt-[3px]">
               {data1?.map((row, index) => (

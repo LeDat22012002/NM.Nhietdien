@@ -194,13 +194,19 @@ const BM1_CDQ = ({ title, apiGet, apiExportExcel, turbineIndex }) => {
       </div>
       <div className="max-w-full overflow-x-auto overflow-y-auto border border-gray-300 rounded scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
         <div className="w-[1000px] h-[610px]">
-          <table className="table-fixed border border-collapse w-full text-[10px]">
+          <table
+            className="table-fixed w-full text-[10px]"
+            style={{
+              borderCollapse: 'separate',
+              borderSpacing: 0,
+            }}
+          >
             <colgroup>
               {Array.from({ length: 28 }).map((_, i) => (
                 <col key={i} style={{ width: '60px' }} />
               ))}
             </colgroup>
-            <thead className="text-sm text-gray-700 border border-gray-700">
+            <thead className="text-sm text-gray-700">
               <tr>
                 {row1?.map((group, index) => (
                   <th
@@ -208,10 +214,8 @@ const BM1_CDQ = ({ title, apiGet, apiExportExcel, turbineIndex }) => {
                     colSpan={group.colSpan}
                     // rowSpan={group.rowSpan}
                     className={clsx(
-                      'sticky top-[0px] bg-white min-w-[50px] px-1 py-2 text-center align-middle h-[50px]',
-                      'border-l border-gray-700 shadow-[inset_0_-1px_0_#4b5563]',
-                      index === 0 &&
-                        'left-0 z-[60] border-r border-gray-700 shadow-[inset_-1px_0_0_#4b5563]'
+                      'sticky top-0 z-[80] bg-white px-1 py-1 text-center align-middle h-[40px] min-w-[60px] border border-gray-700',
+                      index === 0 && 'left-0 z-[90] bg-yellow-300'
                     )}
                   >
                     {group.title}
@@ -225,12 +229,11 @@ const BM1_CDQ = ({ title, apiGet, apiExportExcel, turbineIndex }) => {
                     colSpan={item.colSpan}
                     rowSpan={item.rowSpan}
                     className={clsx(
-                      'sticky top-[96px] z-10 bg-white min-w-[50px] max-w-[50px] px-1  text-center align-middle border border-gray-700',
-                      index === 0 &&
-                        'left-0 z-[60] shadow-[inset_-1px_0_0_#4b5563] ',
+                      'sticky top-[90px] z-[70] bg-white px-1 text-center align-middle h-[100px] min-w-[60px] border border-gray-700',
                       item.vertical
-                        ? 'text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold leading-none whitespace-normal break-words overflow-visible '
-                        : 'text-[14px] font-bold max-h-[30px]'
+                        ? '[writing-mode:vertical-rl] px-6 rotate-180 text-[10px] font-semibold leading-none break-words overflow-visible whitespace-normal'
+                        : 'text-[14px] font-bold',
+                      index === 0 && 'left-0 z-[80] bg-yellow-300'
                     )}
                   >
                     <div
@@ -247,7 +250,7 @@ const BM1_CDQ = ({ title, apiGet, apiExportExcel, turbineIndex }) => {
                     key={index}
                     colSpan={col.colSpan}
                     className={clsx(
-                      'sticky top-[194px] py-1 text-[10px] font-semibold text-center bg-white',
+                      'sticky top-[190px] py-1 text-[10px] font-semibold text-center bg-white',
                       'border border-gray-700 shadow-[inset_0_1px_0_#4b5563]',
                       index === 0 && 'left-0 z-[100] bg-white w-[50px]'
                     )}
@@ -280,8 +283,7 @@ const BM1_CDQ = ({ title, apiGet, apiExportExcel, turbineIndex }) => {
                   <td
                     colSpan={1}
                     className={clsx(
-                      'sticky left-0 z-[50] bg-yellow-400 text-[10px] text-center font-bold',
-                      'border border-gray-700 shadow-[inset_-1px_0_0_#4b5563]'
+                      'sticky left-0 z-[40] bg-yellow-400 text-center text-[10px] font-bold h-[40px] min-w-[60px] border border-gray-700'
                     )}
                   >
                     {moment(row?.thoiGian).format('HH:mm')}

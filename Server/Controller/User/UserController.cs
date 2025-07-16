@@ -6,6 +6,7 @@ using Server.Models;
 using Azure;
 using Server.Helpers;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 
 [Route("api/[controller]")]
@@ -120,6 +121,45 @@ public class UserController : ControllerBase
             Data = null,
         });
     }
+
+    [Authorize]
+    [HttpGet("detail")]
+    public async Task<IActionResult> GetCurrentUser()
+    {
+        var username = User.FindFirst(ClaimTypes.Name)?.Value;
+
+        var user = await (
+            from a in _context.NguoiDungs
+            join nv in _context.NhanViens on a.NhanVienId equals nv.Id
+            join q in _context.Quyens on a.Idquyen equals q.Idquyen
+            join pb in _context.PhongBans on nv.IdphongBan equals pb.IdphongBan
+            where a.TenDangNhap == username
+            select new AccountValidation
+            {
+                IDNguoiDung = a.IdnguoiDung,
+                TenDangNhap = a.TenDangNhap!,
+                MatKhau = a.MatKhau!,
+                NhanVienID = a.NhanVienId ?? 0,
+                MaNV = nv.MaNv!,
+                HoTen = nv.HoTen!,
+                TenPB = pb.TenPhongBan!,
+                IDQuyen = a.Idquyen ?? 0,
+                TenQuyen = q.TenQuyen!,
+                IsLock = a.IsLock ?? 0
+            }
+        ).FirstOrDefaultAsync();
+
+        if (user == null)
+            return NotFound(new ApiResponse<string> { Status = false, Message = "Không tìm thấy người dùng!" });
+
+        return Ok(new ApiResponse<AccountValidation>
+        {
+            Status = true,
+            Message = "Lấy thông tin người dùng thành công",
+            Data = user
+        });
+    }
+
     // 
     [Authorize(Roles = "4")]
     [HttpGet("allusers")]

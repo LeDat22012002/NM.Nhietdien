@@ -14,8 +14,8 @@ export const userSlice = createSlice({
     login: (state, action) => {
       // console.log(action);
       ((state.isLoggedIn = action.payload.isLoggedIn),
-        (state.current = action.payload.userData));
-      state.token = action.payload.token;
+        // (state.current = action.payload.userData));
+        (state.token = action.payload.token));
       state.refreshtoken = action.payload.refreshtoken;
     },
 
@@ -57,7 +57,9 @@ export const userSlice = createSlice({
       state.isLoggedIn = false;
       state.token = null;
       state.refreshtoken = null;
-      state.mess = 'Login session has expired. Please log in again!';
+      state.mess =
+        action.payload?.message ||
+        'Login session has expired. Please log in again!';
     });
   },
 });

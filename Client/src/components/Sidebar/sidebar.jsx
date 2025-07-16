@@ -11,6 +11,7 @@ const { FaSortDown, FaCaretRight } = icons;
 const Sidebar = ({ isMini, onExpand }) => {
   const { current } = useSelector((state) => state.user);
   const { currentNav } = useSelector((state) => state.nav);
+  // console.log('dssts', current);
   const sidebarItems = useMemo(() => {
     if (currentNav === 'Xưởng nồi hơi lọc bụi') return NHLBSidebar();
     if (currentNav === 'Xưởng Tuabin,máy phát') return TBMPSidebar();
@@ -109,11 +110,11 @@ const Sidebar = ({ isMini, onExpand }) => {
 
                 {/* Submenu level 2 */}
                 {!isMini && actived.includes(el.id) && (
-                  <div className="flex flex-col">
+                  <div className="flex flex-col ">
                     {el.submenu.map((item, idx) => (
                       <div key={idx}>
                         {'children' in item ? (
-                          <div className="flex flex-col">
+                          <div className="flex flex-col ">
                             {/* Level 2 toggle */}
                             <div
                               onClick={(e) => {

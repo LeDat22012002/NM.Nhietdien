@@ -37,7 +37,7 @@ const Layout = () => {
       >
         {/* === HEADER CỐ ĐỊNH === */}
         <div
-          className="fixed top-0 right-0 z-40 h-[50px]  flex items-center px-4 shadow transition-all duration-300"
+          className="fixed top-0 right-0 z-40 h-[50px] flex items-center px-4 shadow transition-all duration-300"
           style={{
             left: isSidebarOpen ? '260px' : '60px',
             width: `calc(100% - ${isSidebarOpen ? '260px' : '60px'})`,

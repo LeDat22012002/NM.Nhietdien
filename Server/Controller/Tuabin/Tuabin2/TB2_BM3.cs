@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Server.Models;
 using ClosedXML.Excel;
 using System.Reflection;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Server.Controllers
 {
@@ -18,6 +19,7 @@ namespace Server.Controllers
         }
 
         [HttpGet("getDataTB2_BM3")]
+        [Authorize]
         public async Task<IActionResult> GetDataTB2_BM3(DateTime? begind, DateTime? endd, string sortOrder = "desc")
         {
             // Nếu không truyền thời gian, dùng mặc định là từ hôm qua đến hiện tại
@@ -45,10 +47,11 @@ namespace Server.Controllers
             });
         }
 
-        
+
 
         [HttpGet("exportExcel")]
-        public IActionResult ExportBM3ToExcel(DateTime? begind, DateTime? endd , int turbineIndex = 1)
+        [Authorize]
+        public IActionResult ExportBM3ToExcel(DateTime? begind, DateTime? endd, int turbineIndex = 1)
         {
             // 1. Lấy dữ liệu từ database
             var data = _context.Tb2Bm3s
@@ -65,7 +68,7 @@ namespace Server.Controllers
             {
                 for (int i = 1; i <= 73; i++)
                 {
-                    
+
                     var prop = typeof(Tb2Bm3).GetProperty($"Tag{i}");
                     if (prop != null)
                     {
@@ -92,7 +95,7 @@ namespace Server.Controllers
             var worksheet = workbook.Worksheet("Biểu mẫu 3"); // Sheet name
             for (int col = 1; col <= 100; col++) // quét từ cột A đến CV (100 cột)
             {
-                var cell = worksheet.Cell(4, col); 
+                var cell = worksheet.Cell(4, col);
                 var text = cell.GetString();
 
                 if (!string.IsNullOrWhiteSpace(text) && text.Contains("TURBINE ..."))
@@ -159,16 +162,16 @@ namespace Server.Controllers
             stream.Seek(0, SeekOrigin.Begin);
 
             var content = stream.ToArray();
-           var fileName = $"BM3_TB2_{DateTime.Now:yyyy-MM-dd}.xlsx";
+            var fileName = $"BM3_TB2_{DateTime.Now:yyyy-MM-dd}.xlsx";
 
-           
+
             Response.Headers["Content-Disposition"] = new System.Net.Mime.ContentDisposition
             {
                 FileName = fileName,
                 Inline = false
             }.ToString();
 
-           
+
             return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
         }
 

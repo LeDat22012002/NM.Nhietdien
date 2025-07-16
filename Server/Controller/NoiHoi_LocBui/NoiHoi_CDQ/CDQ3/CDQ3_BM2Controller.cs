@@ -9,18 +9,18 @@ namespace Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CDQ1_BM1Controller : ControllerBase
+    public class CDQ3_BM2Controller : ControllerBase
     {
         private readonly NMCD2Context _context;
 
-        public CDQ1_BM1Controller(NMCD2Context context)
+        public CDQ3_BM2Controller(NMCD2Context context)
         {
             _context = context;
         }
 
-        [HttpGet("getData_CDQ1_BM1")]
+        [HttpGet("getData_CDQ3_BM2")]
         [Authorize]
-        public async Task<IActionResult> GetData_CDQ1_BM1(DateTime? begind, DateTime? endd, string sortOrder = "desc")
+        public async Task<IActionResult> GetData_CDQ3_BM2(DateTime? begind, DateTime? endd, string sortOrder = "desc")
         {
             // Nếu không truyền thời gian, dùng mặc định là từ hôm qua đến hiện tại
             DateTime defaultEnd = DateTime.Now;
@@ -29,7 +29,7 @@ namespace Server.Controllers
             var start = begind ?? defaultBegin;
             var end = endd ?? defaultEnd;
 
-            var query = _context.BmCdq1s
+            var query = _context.BmBomCdq3s
                 .Where(x => x.Time >= start && x.Time <= end);
 
             // Sắp xếp theo thời gian
@@ -39,7 +39,7 @@ namespace Server.Controllers
 
             var data = await query.ToListAsync();
 
-            return Ok(new ApiResponse<List<BmCdq1>>
+            return Ok(new ApiResponse<List<BmBomCdq3>>
             {
                 Status = true,
                 Message = "Lấy dữ liệu thành công",
@@ -51,10 +51,10 @@ namespace Server.Controllers
 
         [HttpGet("exportExcel")]
         [Authorize]
-        public IActionResult ExportExcel_CDQ1_BM1(DateTime? begind, DateTime? endd, int turbineIndex = 1)
+        public IActionResult ExportExcel_CDQ3_BM2(DateTime? begind, DateTime? endd, int turbineIndex = 1)
         {
             // 1. Lấy dữ liệu từ database
-            var data = _context.BmCdq1s
+            var data = _context.BmBomCdq3s
                 .Where(x => x.Time >= begind && x.Time <= endd)
                 .OrderBy(x => x.Time)
                 .ToList();
@@ -63,19 +63,19 @@ namespace Server.Controllers
                 return BadRequest("Không có dữ liệu trong khoảng thời gian được chọn.");
 
 
-            var flatData = new List<CDQ_BM1Validation>();
+            var flatData = new List<CDQ_BM2Validation>();
             foreach (var item in data)
             {
-                for (int i = 1; i <= 51; i++)
+                for (int i = 1; i <= 55; i++)
                 {
 
-                    var prop = typeof(BmCdq1).GetProperty($"Tag{i}");
+                    var prop = typeof(BmBomCdq3).GetProperty($"Tag{i}");
                     if (prop != null)
                     {
                         var value = prop.GetValue(item) as double?;
                         if (value.HasValue)
                         {
-                            flatData.Add(new CDQ_BM1Validation
+                            flatData.Add(new CDQ_BM2Validation
                             {
                                 Time = item.Time?.Date.AddHours(item.Time.Value.Hour) ?? DateTime.MinValue,
                                 Tag = $"Tag{i}",
@@ -87,15 +87,15 @@ namespace Server.Controllers
             }
 
             // 3. Load template Excel
-            string templatePath = Path.Combine(Directory.GetCurrentDirectory(), "App_Data", "BM.17-QT.05.08 Nhat ky van hanh noi hoi CDQ.xlsx");
+            string templatePath = Path.Combine(Directory.GetCurrentDirectory(), "App_Data", "BM.18-QT.05.08 NKVH noi hoi CDQ.xlsx");
             if (!System.IO.File.Exists(templatePath))
                 return BadRequest("Không tìm thấy file mẫu.");
 
             using var workbook = new XLWorkbook(templatePath);
-            var worksheet = workbook.Worksheet("BM.17-QT.05.08"); // Sheet name
+            var worksheet = workbook.Worksheet("BM.18-QT.05.08"); // Sheet name
             for (int col = 1; col <= 100; col++) // quét từ cột A đến CV (100 cột)
             {
-                var cell = worksheet.Cell(3, col);
+                var cell = worksheet.Cell(4, col);
                 var text = cell.GetString();
 
                 if (!string.IsNullOrWhiteSpace(text) && text.Contains("SỐ..."))
@@ -106,9 +106,9 @@ namespace Server.Controllers
             }
 
             var today = DateTime.Now;
-            for (int col = 1; col <= 100; col++) // dòng 4
+            for (int col = 1; col <= 100; col++) // dòng 5
             {
-                var cell = worksheet.Cell(4, col);
+                var cell = worksheet.Cell(5, col);
                 var text = cell.GetString();
 
                 if (!string.IsNullOrWhiteSpace(text) && text.Contains("Ngày"))
@@ -118,7 +118,7 @@ namespace Server.Controllers
                 }
             }
             // dòng bắt đầu đổ dữ liệu 
-            int startRow = 10;
+            int startRow = 12;
             int currentRow = startRow;
 
             // 4. Ghi dữ liệu
@@ -137,7 +137,7 @@ namespace Server.Controllers
                 for (int col = 2; col <= 100; col++)
                 {
                     worksheet.Column(col).Width = 14;
-                    var header = worksheet.Cell(9, col).GetString()?.Trim();
+                    var header = worksheet.Cell(11, col).GetString()?.Trim();
                     if (string.IsNullOrEmpty(header)) continue;
 
                     var tagMatch = group.FirstOrDefault(x =>
@@ -162,7 +162,7 @@ namespace Server.Controllers
             stream.Seek(0, SeekOrigin.Begin);
 
             var content = stream.ToArray();
-            var fileName = $"BM1_CDQ1_{DateTime.Now:yyyy-MM-dd}.xlsx";
+            var fileName = $"BM2_CDQ3_{DateTime.Now:yyyy-MM-dd}.xlsx";
 
 
             Response.Headers["Content-Disposition"] = new System.Net.Mime.ContentDisposition

@@ -43,6 +43,7 @@ const Login = () => {
             },
           })
         );
+
         dispatch(setCurrentNav('Home'));
         navigate(`/${path.LAYOUT}/${path.THONGKE}`);
         toast.success(rs.message);

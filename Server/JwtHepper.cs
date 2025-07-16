@@ -5,7 +5,7 @@ using System.Text;
 
 public static class JwtHelper
 {
-    public static string GenerateToken(string manv, int role, string secretKey, string issuer, int minutes = 30)
+    public static string GenerateToken(string manv, int role, string secretKey, string issuer, int minutes = 60)
     {
         var claims = new[]
         {

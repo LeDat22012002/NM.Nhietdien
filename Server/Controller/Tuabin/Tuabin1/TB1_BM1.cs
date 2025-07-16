@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Server.Models;
 using ClosedXML.Excel;
 using System.Reflection;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Server.Controllers
 {
@@ -18,6 +19,7 @@ namespace Server.Controllers
         }
 
         [HttpGet("getData_TB1_BM1")]
+        [Authorize]
         public async Task<IActionResult> GetData_TB1_BM1(DateTime? begind, DateTime? endd, string sortOrder = "desc")
         {
             // Nếu không truyền thời gian, dùng mặc định là từ hôm qua đến hiện tại
@@ -45,10 +47,11 @@ namespace Server.Controllers
             });
         }
 
-        
+
 
         [HttpGet("exportExcel")]
-        public IActionResult ExportExcel_TB1_BM1(DateTime? begind, DateTime? endd , int turbineIndex = 1)
+        [Authorize]
+        public IActionResult ExportExcel_TB1_BM1(DateTime? begind, DateTime? endd, int turbineIndex = 1)
         {
             // 1. Lấy dữ liệu từ database
             var data = _context.Tb1Bm1s
@@ -59,13 +62,13 @@ namespace Server.Controllers
             if (!data.Any())
                 return BadRequest("Không có dữ liệu trong khoảng thời gian được chọn.");
 
-           
+
             var flatData = new List<TB1_BM1Valiadation>();
             foreach (var item in data)
             {
                 for (int i = 1; i <= 51; i++)
                 {
-                    
+
                     var prop = typeof(Tb1Bm1).GetProperty($"Tag{i}");
                     if (prop != null)
                     {
@@ -92,7 +95,7 @@ namespace Server.Controllers
             var worksheet = workbook.Worksheet("biểu mẫu 1"); // Sheet name
             for (int col = 1; col <= 100; col++) // quét từ cột A đến CV (100 cột)
             {
-                var cell = worksheet.Cell(2, col); 
+                var cell = worksheet.Cell(2, col);
                 var text = cell.GetString();
 
                 if (!string.IsNullOrWhiteSpace(text) && text.Contains("TURBINE ..."))
@@ -159,16 +162,16 @@ namespace Server.Controllers
             stream.Seek(0, SeekOrigin.Begin);
 
             var content = stream.ToArray();
-           var fileName = $"BM1_TB1_{DateTime.Now:yyyy-MM-dd}.xlsx";
+            var fileName = $"BM1_TB1_{DateTime.Now:yyyy-MM-dd}.xlsx";
 
-           
+
             Response.Headers["Content-Disposition"] = new System.Net.Mime.ContentDisposition
             {
                 FileName = fileName,
                 Inline = false
             }.ToString();
 
-           
+
             return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
         }
 

@@ -29,3 +29,9 @@ export const apigetAllUser = () =>
     url: '/user/allusers',
     method: 'get',
   });
+
+export const apigetDetailUser = () =>
+  axios({
+    url: '/user/detail',
+    method: 'get',
+  });

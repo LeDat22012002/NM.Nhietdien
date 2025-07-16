@@ -587,13 +587,21 @@ const BM2_CDQ = ({ apiGet, title, apiExportExcel, turbineIndex }) => {
       </div>
       <div className="max-w-full overflow-x-auto overflow-y-auto border border-gray-300 rounded scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
         <div className="w-[1000px] h-[610px]">
-          <table className="table-fixed border border-collapse w-full text-[10px]">
+          <table
+            className="table-fixed w-full text-[10px]"
+            style={{
+              borderCollapse: 'separate',
+              borderSpacing: 0,
+            }}
+          >
             <colgroup>
               {Array.from({ length: 56 }).map((_, i) => (
                 <col key={i} style={{ width: '60px' }} />
               ))}
             </colgroup>
-            <thead className="text-sm text-gray-700 border border-gray-700">
+
+            <thead className="text-sm text-gray-700">
+              {/* ROW 1 */}
               <tr>
                 {row1?.map((group, index) => (
                   <th
@@ -601,16 +609,16 @@ const BM2_CDQ = ({ apiGet, title, apiExportExcel, turbineIndex }) => {
                     colSpan={group.colSpan}
                     rowSpan={group?.rowSpan}
                     className={clsx(
-                      'sticky top-0 z-[60] bg-white min-w-[50px] px-1 py-2 text-center align-middle h-[50px]',
-                      'border-l border-gray-700 shadow-[inset_0_-1px_0_#4b5563]',
-                      index === 0 &&
-                        'left-0 z-[61] shadow-[inset_-1px_0_0_#4b5563]'
+                      'sticky top-0 z-[80] bg-white px-1 py-2 text-center align-middle h-[40px] min-w-[60px] border border-gray-700',
+                      index === 0 && 'left-0 z-[90] bg-yellow-300'
                     )}
                   >
                     {group.title}
                   </th>
                 ))}
               </tr>
+
+              {/* ROW 2 */}
               <tr>
                 {row2.map((item, index) => (
                   <th
@@ -618,20 +626,21 @@ const BM2_CDQ = ({ apiGet, title, apiExportExcel, turbineIndex }) => {
                     colSpan={item.colSpan}
                     rowSpan={item.rowSpan}
                     className={clsx(
-                      'sticky top-[50px] z-[60] bg-white min-w-[50px] max-w-[50px] px-1  text-center align-middle border border-gray-700',
+                      'sticky top-[40px] z-[70] bg-white px-1 text-center align-middle h-[40px] min-w-[60px] border border-gray-700',
                       item.vertical
-                        ? 'text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold leading-none whitespace-normal break-words overflow-visible '
-                        : 'text-[14px] font-bold max-h-[30px] h-[40px]'
+                        ? '[writing-mode:vertical-rl] px-6 rotate-180 text-[10px] font-semibold leading-none break-words overflow-visible whitespace-normal'
+                        : 'text-[14px] font-bold'
                     )}
                   >
                     <div
-                      className="inline-block w-full h-full"
+                      className="inline-block w-full h-full "
                       dangerouslySetInnerHTML={{ __html: item.title }}
                     />
                   </th>
                 ))}
               </tr>
 
+              {/* ROW 3 */}
               <tr>
                 {row3.map((item, index) => (
                   <th
@@ -639,33 +648,30 @@ const BM2_CDQ = ({ apiGet, title, apiExportExcel, turbineIndex }) => {
                     colSpan={item.colSpan}
                     rowSpan={item.rowSpan}
                     className={clsx(
-                      'sticky top-[88px] z-[60] bg-white min-w-[50px] max-w-[50px] px-1 text-center align-middle',
-                      'border border-gray-700 border-b border-r shadow-[inset_0_-1px_0_#4b5563]',
-                      index === 0 &&
-                        'left-0 z-[70] shadow-[inset_-1px_0_0_#4b5563] border-r',
+                      'sticky top-[80px] z-[60] bg-white px-6 text-center align-middle h-[100px] min-w-[60px] border border-gray-700 ',
                       item.vertical
-                        ? 'text-[10px] [writing-mode:vertical-rl] rotate-180 font-semibold leading-none whitespace-normal break-words overflow-visible'
-                        : 'text-[14px] font-bold max-h-[30px]'
+                        ? '[writing-mode:vertical-rl] rotate-180 text-[10px] font-semibold leading-none break-words overflow-visible whitespace-normal'
+                        : 'text-[14px] font-bold',
+                      index === 0 && 'left-0 z-[70] bg-yellow-300'
                     )}
                   >
                     <div
-                      className="inline-block w-full h-full"
+                      className="inline-block w-full h-full text-center"
                       dangerouslySetInnerHTML={{ __html: item.title }}
                     />
                   </th>
                 ))}
               </tr>
 
+              {/* ROW 4 */}
               <tr>
                 {row4?.map((col, index) => (
                   <th
                     key={index}
                     colSpan={col?.colSpan}
                     className={clsx(
-                      'sticky top-[204px] py-1 text-[10px] font-semibold text-center bg-white',
-                      'border border-gray-700 shadow-[inset_0_1px_0_#4b5563]',
-                      index === 0 &&
-                        'left-0 z-[60] shadow-[inset_-1px_0_0_#4b5563] border-r border-gray-700'
+                      'sticky top-[180px] z-[50] bg-white px-1 py-1 text-center align-middle h-[40px] min-w-[60px] border border-gray-700 text-[10px] font-semibold',
+                      index === 0 && 'left-0 z-[60] bg-yellow-300'
                     )}
                   >
                     {col.title}
@@ -673,22 +679,21 @@ const BM2_CDQ = ({ apiGet, title, apiExportExcel, turbineIndex }) => {
                 ))}
               </tr>
             </thead>
+
             <tbody>
-              {data1?.map((row, index) => (
-                <tr key={index}>
+              {data1?.map((row, rowIndex) => (
+                <tr key={rowIndex}>
                   <td
-                    colSpan={1}
                     className={clsx(
-                      'sticky left-0 z-[50] bg-yellow-400 text-[10px] text-center font-bold',
-                      'border border-gray-700 shadow-[inset_-1px_0_0_#4b5563]'
+                      'sticky left-0 z-[40] bg-yellow-100 text-center text-[10px] font-bold h-[40px] min-w-[60px] border border-gray-700'
                     )}
                   >
                     {moment(row?.thoiGian).format('HH:mm')}
                   </td>
-                  {uniqueTagNames?.map((tagname) => (
+                  {uniqueTagNames?.map((tagname, colIndex) => (
                     <td
-                      key={tagname}
-                      className="border border-gray-700 text-black text-center px-1 py-1 truncate max-w-[60px] overflow-hidden"
+                      key={colIndex}
+                      className="h-[40px] min-w-[60px] max-w-[60px] px-1 py-1 truncate border border-gray-700 text-center text-black"
                     >
                       {row[tagname]}
                     </td>

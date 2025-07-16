@@ -1,6 +1,6 @@
 import icons from '../../ultils/icons';
 import avatar from '../../assets/image/account.png';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 // import { apiLogout } from '../../apis/user';
 import { toast } from 'react-toastify';
@@ -12,13 +12,15 @@ import { navigation } from '../../ultils/contain';
 import { clsx } from 'clsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentNav } from '../../store/currentNav/navSlice';
-import { logout } from '../../store/user/userSlice';
+import { clearMessage, logout } from '../../store/user/userSlice';
+import { getCurent } from '../../store/user/asyncActions';
+import Swal from 'sweetalert2';
 const { IoMdMenu } = icons;
 const Header = ({ onToggleSidebar }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isShowOption, setIsShowOption] = useState(false);
-  const { current } = useSelector((state) => state.user);
+  const { current, isLoggedIn, mess } = useSelector((state) => state.user);
   // console.log('daaa', refreshToken);
   const { currentNav } = useSelector((state) => state.nav);
   const handleLogout = async () => {
@@ -29,6 +31,25 @@ const Header = ({ onToggleSidebar }) => {
   const handleActive = (value) => {
     dispatch(setCurrentNav(value));
   };
+
+  useEffect(() => {
+    const setTimeoutId = setTimeout(() => {
+      if (isLoggedIn) {
+        dispatch(getCurent());
+      }
+    }, 100);
+    return () => {
+      clearTimeout(setTimeoutId);
+    };
+  }, [dispatch, isLoggedIn]);
+
+  // useEffect(() => {
+  //   if (mess)
+  //     Swal.fire('Oops!', mess, 'info').then(() => {
+  //       dispatch(clearMessage());
+  //       navigate(`${path.LOGIN}`);
+  //     });
+  // }, [mess]);
 
   return (
     <div className="w-full bg-white h-[50px] flex justify-between items-center ">

@@ -4,6 +4,7 @@ using Server.Models;
 using ClosedXML.Excel;
 using System.Reflection;
 using System.Net.Mime;
+using Microsoft.AspNetCore.Authorization;
 namespace Server.Controllers
 {
     [Route("api/[controller]")]
@@ -18,6 +19,7 @@ namespace Server.Controllers
         }
 
         [HttpGet("getData_CDQ12_BM2")]
+        [Authorize]
         public async Task<IActionResult> GetData_CDQ12_BM2(DateTime? begind, DateTime? endd, string sortOrder = "desc")
         {
             // Nếu không truyền thời gian, dùng mặc định là từ hôm qua đến hiện tại
@@ -45,10 +47,11 @@ namespace Server.Controllers
             });
         }
 
-        
+
 
         [HttpGet("exportExcel")]
-        public IActionResult ExportExcel_CDQ12_BM2(DateTime? begind, DateTime? endd , int turbineIndex = 1)
+        [Authorize]
+        public IActionResult ExportExcel_CDQ12_BM2(DateTime? begind, DateTime? endd, int turbineIndex = 1)
         {
             // 1. Lấy dữ liệu từ database
             var data = _context.BmBomCdq12s
@@ -59,13 +62,13 @@ namespace Server.Controllers
             if (!data.Any())
                 return BadRequest("Không có dữ liệu trong khoảng thời gian được chọn.");
 
-           
+
             var flatData = new List<CDQ_BM2Validation>();
             foreach (var item in data)
             {
-                for (int i = 1; i <= 51; i++)
+                for (int i = 1; i <= 55; i++)
                 {
-                    
+
                     var prop = typeof(BmBomCdq12).GetProperty($"Tag{i}");
                     if (prop != null)
                     {
@@ -92,7 +95,7 @@ namespace Server.Controllers
             var worksheet = workbook.Worksheet("BM.18-QT.05.08"); // Sheet name
             for (int col = 1; col <= 100; col++) // quét từ cột A đến CV (100 cột)
             {
-                var cell = worksheet.Cell(4, col); 
+                var cell = worksheet.Cell(4, col);
                 var text = cell.GetString();
 
                 if (!string.IsNullOrWhiteSpace(text) && text.Contains("SỐ...."))
@@ -154,21 +157,21 @@ namespace Server.Controllers
             // worksheet.Columns().AdjustToContents();
 
             // 5. Xuất file
-           using var stream = new MemoryStream();
+            using var stream = new MemoryStream();
             workbook.SaveAs(stream);
             stream.Seek(0, SeekOrigin.Begin);
 
             var content = stream.ToArray();
-           var fileName = $"BM2_CDQ1&2_{DateTime.Now:yyyy-MM-dd}.xlsx";
+            var fileName = $"BM2_CDQ1&2_{DateTime.Now:yyyy-MM-dd}.xlsx";
 
-           
+
             Response.Headers["Content-Disposition"] = new System.Net.Mime.ContentDisposition
             {
                 FileName = fileName,
                 Inline = false
             }.ToString();
 
-           
+
             return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
 
         }

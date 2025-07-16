@@ -49,7 +49,7 @@ export const HomeSidebar = (current) => [
       },
     ],
   },
-  ...(current?.role === 4
+  ...(current?.idQuyen === 4
     ? [
         {
           id: 3,
@@ -729,12 +729,12 @@ export const TBMPSidebar = () => [
             children: [
               {
                 text: 'BM.09-QT.05.08',
-                path: '/Mayphat/BM/log1',
+                path: `/${path.LAYOUT}/${path.TB_BM1.replace(':id', '2')}`,
                 icon: <IoRadioButtonOn size={16} />,
               },
               {
                 text: 'BM.10-QT.05.08',
-                path: '/Mayphat/BM/log2',
+                path: `/${path.LAYOUT}/${path.TB_BM2.replace(':id', '2')}`,
                 icon: <IoRadioButtonOn size={16} />,
               },
               {

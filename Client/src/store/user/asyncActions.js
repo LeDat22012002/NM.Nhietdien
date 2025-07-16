@@ -4,9 +4,13 @@ import * as apis from '../../apis';
 export const getCurent = createAsyncThunk(
   'user/current',
   async (data, { rejectWithValue }) => {
-    const response = await apis.apiGetUserDetails();
-    // console.log(response);
-    if (!response.success) return rejectWithValue(response);
-    return response.rs;
+    try {
+      const response = await apis.apigetDetailUser();
+      if (!response.status)
+        return rejectWithValue({ message: response?.message });
+      return response.data;
+    } catch (err) {
+      return rejectWithValue({ message: 'Token hết hạn hoặc không hợp lệ!' });
+    }
   }
 );
