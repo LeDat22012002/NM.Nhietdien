@@ -209,17 +209,17 @@ export const NHLBSidebar = () => [
             children: [
               {
                 text: 'BM.14-QT.05.08',
-                path: '/Mayphat/BM/log2',
+                path: `/${path.LAYOUT}/${path.NHND_BM.replace(':id', '1')}`,
                 icon: <IoRadioButtonOn size={20} />,
               },
               {
-                text: 'BM.15-QT.05.08',
-                path: '/Mayphat/BM/log2',
+                text: 'BM.34-QT.05.08(BM2)',
+                path: `/${path.LAYOUT}/${path.LBKLH_BM.replace(':id', '1')}`,
                 icon: <IoRadioButtonOn size={20} />,
               },
               {
                 text: 'BM.16-QT.05.08',
-                path: '/Mayphat/BM/log2',
+                path: `/${path.LAYOUT}/${path.QHNHND_BM.replace(':id', '1')}`,
                 icon: <IoRadioButtonOn size={20} />,
               },
             ],
@@ -234,8 +234,8 @@ export const NHLBSidebar = () => [
                 icon: <IoRadioButtonOn size={20} />,
               },
               {
-                text: 'BM.15-QT.05.08',
-                path: '/Mayphat/BM/log2',
+                text: 'BM.34-QT.05.08(BM2)',
+                path: `/${path.LAYOUT}/${path.LBKLH_BM.replace(':id', '2')}`,
                 icon: <IoRadioButtonOn size={20} />,
               },
               {
@@ -255,8 +255,8 @@ export const NHLBSidebar = () => [
                 icon: <IoRadioButtonOn size={20} />,
               },
               {
-                text: 'BM.15-QT.05.08',
-                path: '/Mayphat/BM/log2',
+                text: 'BM.34-QT.05.08(BM2)',
+                path: `/${path.LAYOUT}/${path.LBKLH_BM.replace(':id', '3')}`,
                 icon: <IoRadioButtonOn size={20} />,
               },
               {
@@ -276,8 +276,8 @@ export const NHLBSidebar = () => [
                 icon: <IoRadioButtonOn size={20} />,
               },
               {
-                text: 'BM.15-QT.05.08',
-                path: '/Mayphat/BM/log2',
+                text: 'BM.34-QT.05.08(BM2)',
+                path: `/${path.LAYOUT}/${path.LBKLH_BM.replace(':id', '4')}`,
                 icon: <IoRadioButtonOn size={20} />,
               },
               {
@@ -297,8 +297,8 @@ export const NHLBSidebar = () => [
                 icon: <IoRadioButtonOn size={20} />,
               },
               {
-                text: 'BM.15-QT.05.08',
-                path: '/Mayphat/BM/log2',
+                text: 'BM.34-QT.05.08(BM2)',
+                path: `/${path.LAYOUT}/${path.LBKLH_BM.replace(':id', '5')}`,
                 icon: <IoRadioButtonOn size={20} />,
               },
               {
@@ -318,8 +318,8 @@ export const NHLBSidebar = () => [
                 icon: <IoRadioButtonOn size={20} />,
               },
               {
-                text: 'BM.15-QT.05.08',
-                path: '/Mayphat/BM/log2',
+                text: 'BM.34-QT.05.08(BM2)',
+                path: `/${path.LAYOUT}/${path.LBKLH_BM.replace(':id', '6')}`,
                 icon: <IoRadioButtonOn size={20} />,
               },
               {
@@ -339,8 +339,8 @@ export const NHLBSidebar = () => [
                 icon: <IoRadioButtonOn size={20} />,
               },
               {
-                text: 'BM.15-QT.05.08',
-                path: '/Mayphat/BM/log2',
+                text: 'BM.34-QT.05.08(BM2)',
+                path: `/${path.LAYOUT}/${path.LBKLH_BM.replace(':id', '7')}`,
                 icon: <IoRadioButtonOn size={20} />,
               },
               {
@@ -360,8 +360,8 @@ export const NHLBSidebar = () => [
                 icon: <IoRadioButtonOn size={20} />,
               },
               {
-                text: 'BM.15-QT.05.08',
-                path: '/Mayphat/BM/log2',
+                text: 'BM.34-QT.05.08(BM2)',
+                path: `/${path.LAYOUT}/${path.LBKLH_BM.replace(':id', '8')}`,
                 icon: <IoRadioButtonOn size={20} />,
               },
               {
@@ -381,8 +381,29 @@ export const NHLBSidebar = () => [
                 icon: <IoRadioButtonOn size={20} />,
               },
               {
-                text: 'BM.15-QT.05.08',
+                text: 'BM.34-QT.05.08(BM1)',
+                path: `/${path.LAYOUT}/${path.LBKLH_BM.replace(':id', '9')}`,
+                icon: <IoRadioButtonOn size={20} />,
+              },
+              {
+                text: 'BM.16-QT.05.08',
                 path: '/Mayphat/BM/log2',
+                icon: <IoRadioButtonOn size={20} />,
+              },
+            ],
+          },
+          {
+            text: 'Nồi hơi lọc bụi 10',
+            icon: <TbCircleDashedNumber9 size={20} />,
+            children: [
+              {
+                text: 'BM.14-QT.05.08',
+                path: '/Mayphat/BM/log2',
+                icon: <IoRadioButtonOn size={20} />,
+              },
+              {
+                text: 'BM.34-QT.05.08(BM1)',
+                path: `/${path.LAYOUT}/${path.LBKLH_BM.replace(':id', '10')}`,
                 icon: <IoRadioButtonOn size={20} />,
               },
               {
@@ -404,17 +425,12 @@ export const NHLBSidebar = () => [
             children: [
               {
                 text: 'BM.19-QT.05.08',
-                path: '/Mayphat/BM/log2',
+                path: `/${path.LAYOUT}/${path.BM1_NHKT.replace(':id', '1')}`,
                 icon: <IoRadioButtonOn size={20} />,
               },
               {
                 text: 'BM.20-QT.05.08',
-                path: '/Mayphat/BM/log2',
-                icon: <IoRadioButtonOn size={20} />,
-              },
-              {
-                text: 'BM.21-QT.05.08',
-                path: '/Mayphat/BM/log2',
+                path: `/${path.LAYOUT}/${path.BM2_NHKT.replace(':id', '1')}`,
                 icon: <IoRadioButtonOn size={20} />,
               },
             ],
@@ -425,17 +441,12 @@ export const NHLBSidebar = () => [
             children: [
               {
                 text: 'BM.19-QT.05.08',
-                path: '/Mayphat/BM/log2',
+                path: `/${path.LAYOUT}/${path.BM1_NHKT.replace(':id', '2')}`,
                 icon: <IoRadioButtonOn size={20} />,
               },
               {
                 text: 'BM.20-QT.05.08',
-                path: '/Mayphat/BM/log2',
-                icon: <IoRadioButtonOn size={20} />,
-              },
-              {
-                text: 'BM.21-QT.05.08',
-                path: '/Mayphat/BM/log2',
+                path: `/${path.LAYOUT}/${path.BM2_NHKT.replace(':id', '2')}`,
                 icon: <IoRadioButtonOn size={20} />,
               },
             ],
@@ -446,17 +457,12 @@ export const NHLBSidebar = () => [
             children: [
               {
                 text: 'BM.19-QT.05.08',
-                path: '/Mayphat/BM/log2',
+                path: `/${path.LAYOUT}/${path.BM1_NHKT.replace(':id', '3')}`,
                 icon: <IoRadioButtonOn size={20} />,
               },
               {
                 text: 'BM.20-QT.05.08',
-                path: '/Mayphat/BM/log2',
-                icon: <IoRadioButtonOn size={20} />,
-              },
-              {
-                text: 'BM.21-QT.05.08',
-                path: '/Mayphat/BM/log2',
+                path: `/${path.LAYOUT}/${path.BM2_NHKT.replace(':id', '3')}`,
                 icon: <IoRadioButtonOn size={20} />,
               },
             ],

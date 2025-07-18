@@ -19,7 +19,7 @@ const row1 = [
       </div>
     ),
   },
-  { colSpan: 29, title: 'Hệ thống thiết bị đo trong thân turbine' },
+  { colSpan: 25, title: 'Hệ thống thiết bị đo trong thân turbine' },
   { colSpan: 10, title: 'Hệ thống nước ngưng và bình ngưng' },
   { colSpan: 5, title: 'Hệ thống bơm chân không' },
   { colSpan: 4, title: '' },
@@ -40,7 +40,7 @@ const row2 = [
     vertical: false,
   },
   {
-    colSpan: 9,
+    colSpan: 5,
     rowSpan: 1,
     title: 'Độ rung',
     vertical: false,
@@ -69,16 +69,17 @@ const row2 = [
     title: 'Hệ thống bình ngưng',
     vertical: false,
   },
+
   {
     colSpan: 1,
     rowSpan: 2,
-    title: 'I bơm chân không...',
+    title: 'I bơm chân không 1',
     vertical: true,
   },
   {
     colSpan: 1,
     rowSpan: 2,
-    title: 'I bơm chân không...',
+    title: 'I bơm chân không 2',
     vertical: true,
   },
   {
@@ -96,13 +97,13 @@ const row2 = [
   {
     colSpan: 1,
     rowSpan: 2,
-    title: 'L bể/bơm chân không vận hành',
+    title: 'L bể chân không',
     vertical: true,
   },
   {
     colSpan: 1,
     rowSpan: 2,
-    title: 'I động cơ nước khử khoáng số …',
+    title: 'I động cơ nước khử khoáng số 1',
     vertical: true,
   },
   {
@@ -120,7 +121,7 @@ const row2 = [
   {
     colSpan: 1,
     rowSpan: 2,
-    title: 'I động cơ bơm công nghiệp/ tăng áp tuân hoàn …',
+    title: 'I động cơ bơm công nghiệp 1',
     vertical: true,
   },
 ];
@@ -133,36 +134,36 @@ const row3 = [
   { title: 'Giãn nở thành A', colSpan: 1, vertical: true },
   { title: 'Giãn nở thành B', colSpan: 1, vertical: true },
   { title: 'Độ rung gối 1', colSpan: 1, vertical: true },
-  { title: 'Độ rung gối 1B', colSpan: 1, vertical: true },
+
   { title: 'Độ rung gối 2', colSpan: 1, vertical: true },
-  { title: 'Độ rung gối 2B', colSpan: 1, vertical: true },
+
   { title: 'Độ rung gối 3', colSpan: 1, vertical: true },
-  { title: 'Độ rung gối 3B', colSpan: 1, vertical: true },
+
   { title: 'Độ rung gối 4', colSpan: 1, vertical: true },
-  { title: 'Độ rung gối 4B', colSpan: 1, vertical: true },
+
   { title: 'Độ rung gối 5', colSpan: 1, vertical: true },
   { title: 'Tº dầu  làm việc', colSpan: 1, vertical: true },
-  { title: 'Tº dầu hồi gối 1 max', colSpan: 1, vertical: true },
-  { title: 'Tº dầu hồi gối 2 max', colSpan: 1, vertical: true },
-  { title: 'Tº dầu hồi gối 3 max', colSpan: 1, vertical: true },
-  { title: 'Tº dầu hồi gối 4 max', colSpan: 1, vertical: true },
+  { title: 'Tº dầu hồi gối 1', colSpan: 1, vertical: true },
+  { title: 'Tº dầu hồi gối 2', colSpan: 1, vertical: true },
+  { title: 'Tº dầu hồi gối 3', colSpan: 1, vertical: true },
+  { title: 'Tº dầu hồi gối 4', colSpan: 1, vertical: true },
   { title: 'Tº dầu hồi gối 5', colSpan: 1, vertical: true },
   { title: 'Tº bạc chặn phía trước max', colSpan: 1, vertical: true },
   { title: 'Tº bạc chặn phía sau max1', colSpan: 1, vertical: true },
   { title: 'Tº bạc chặn phía sau max2', colSpan: 1, vertical: true },
   { title: 'Tº bạc chặn phía sau max3', colSpan: 1, vertical: true },
-  { title: 'Tº bạc đỡ gối 1 max', colSpan: 1, vertical: true },
-  { title: 'Tº bạc đỡ gối 2 max', colSpan: 1, vertical: true },
-  { title: 'Tº bạc đỡ gối 3 max', colSpan: 1, vertical: true },
-  { title: 'Tº bạc đỡ gối 4 max', colSpan: 1, vertical: true },
+  { title: 'Tº bạc đỡ gối 1', colSpan: 1, vertical: true },
+  { title: 'Tº bạc đỡ gối 2', colSpan: 1, vertical: true },
+  { title: 'Tº bạc đỡ gối 3', colSpan: 1, vertical: true },
+  { title: 'Tº bạc đỡ gối 4', colSpan: 1, vertical: true },
   { title: 'Tº bạc đỡ gối 5', colSpan: 1, vertical: true },
   { title: 'L bình ngưng', colSpan: 1, vertical: true },
   { title: 'Tº nước ngưng', colSpan: 1, vertical: true },
-  { title: 'I bơm số... ', colSpan: 1, vertical: true },
-  { title: 'I bơm số ...', colSpan: 1, vertical: true },
+  { title: 'I bơm số 1 ', colSpan: 1, vertical: true },
+  { title: 'I bơm số 2', colSpan: 1, vertical: true },
   { title: 'P đầu ra bơm ngưng', colSpan: 1, vertical: true },
   { title: 'P nước tuần hoàn đầu vào max', colSpan: 1, vertical: true },
-  { title: 'Tº nước tuần hoàn đầu vào  trái', colSpan: 1, vertical: true },
+  { title: 'Tº nước tuần hoàn đầu vào trái', colSpan: 1, vertical: true },
   { title: 'Tº nước tuần hoàn đầu ra trái', colSpan: 1, vertical: true },
   { title: 'Tº nước tuần hoàn đầu vào phải', colSpan: 1, vertical: true },
   { title: 'Tº nước tuần hoàn đầu ra phải', colSpan: 1, vertical: true },
@@ -175,13 +176,9 @@ const row4 = [
   { title: 'mm', colSpan: 1 },
   { title: 'mm', colSpan: 1 },
   { title: 'μm', colSpan: 1 },
-  { title: '', colSpan: 1 },
   { title: 'μm', colSpan: 1 },
-  { title: '', colSpan: 1 },
   { title: 'μm', colSpan: 1 },
-  { title: '', colSpan: 1 },
   { title: 'μm', colSpan: 1 },
-  { title: '', colSpan: 1 },
   { title: 'mm/s', colSpan: 1 },
   { title: 'ºC', colSpan: 1 },
   { title: 'ºC', colSpan: 1 },
@@ -198,7 +195,7 @@ const row4 = [
   { title: 'ºC', colSpan: 1 },
   { title: 'ºC', colSpan: 1 },
   { title: 'ºC', colSpan: 1 },
-  { title: '', colSpan: 1 },
+  { title: 'mm', colSpan: 1 },
   { title: 'ºC', colSpan: 1 },
   { title: 'A', colSpan: 1 },
   { title: 'A', colSpan: 1 },
@@ -339,7 +336,7 @@ const TB_BM2 = ({ apiGet, title, apiExportExcel, turbineIndex }) => {
             }}
           >
             <colgroup>
-              {Array.from({ length: 49 }).map((_, i) => (
+              {Array.from({ length: 45 }).map((_, i) => (
                 <col key={i} style={{ width: '60px' }} />
               ))}
             </colgroup>

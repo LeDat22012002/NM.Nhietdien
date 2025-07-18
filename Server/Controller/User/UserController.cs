@@ -71,9 +71,25 @@ public class UserController : ControllerBase
                         x.TenDangNhap == request.Manv &&
                         x.MatKhau == mk &&
                         x.IsLock == 0);
-        if (account == null)
-            return Unauthorized("Tài khoản không tồn tại");
+        if (account == null || account.MatKhau != mk)
+        {
+            return Unauthorized(new ApiResponse<object>
+            {
+                Status = false,
+                Message = "Tài khoản hoặc mật khẩu không đúng!",
+                Data = null
+            });
+        }
 
+        if (account.IsLock == 1)
+        {
+            return Unauthorized(new ApiResponse<object>
+            {
+                Status = false,
+                Message = "Tài khoản đã bị khóa!",
+                Data = null
+            });
+        }
         int role = account.Idquyen ?? 0;
 
         var accessToken = JwtHelper.GenerateToken(

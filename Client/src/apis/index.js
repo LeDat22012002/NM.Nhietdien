@@ -5,6 +5,15 @@ export * from './Tuabin/Tuabin1/TB1_BM1';
 export * from './Tuabin/Tuabin1/TB1_BM2';
 export * from './Tuabin/Tuabin2/TB2_BM';
 
+// Nồi hơi Nhiệt Dư
+export * from './NoiHoi_ND/NoiHoi_ND';
+
+// Nồi hơi khí thang
+export * from './NoiHoi_KT/NoiHoiKT1';
+export * from './NoiHoi_KT/NoiHoiKT2';
+export * from './NoiHoi_KT/NoiHoiKT3';
+// Nồi hơi lọc bụi
+export * from './NoiHoi_LB910/NoiHoi_LB910';
 // NoiHoi_CDQ
 
 export * from './NoiHoi_CDQ/CDQ1/CDQ1_BM1';

@@ -17,11 +17,11 @@ const row1 = [
       </div>
     ),
   },
-  { colSpan: 29, title: 'Turbine' },
+  { colSpan: 23, title: 'Turbine' },
   { colSpan: 10, title: 'Cửa trích và bộ gia nhiệt hạ áp' },
 
   { colSpan: 4, rowSpan: 2, title: 'Dầu EH' },
-  { colSpan: 7, rowSpan: 2, title: 'Dầu bôi trơn' },
+  { colSpan: 6, rowSpan: 2, title: 'Dầu bôi trơn' },
   { colSpan: 2, rowSpan: 2, title: 'Áp suất dầu' },
 
   //   { colSpan: 4, title: '' },
@@ -69,24 +69,6 @@ const row2 = [
   {
     colSpan: 1,
     rowSpan: 2,
-    title: 'P max trước van hơi chính',
-    vertical: true,
-  },
-  {
-    colSpan: 1,
-    rowSpan: 2,
-    title: 'T max trước van hơi chính ',
-    vertical: true,
-  },
-  {
-    colSpan: 1,
-    rowSpan: 2,
-    title: 'P max trước van điều tiết',
-    vertical: true,
-  },
-  {
-    colSpan: 1,
-    rowSpan: 2,
     title: 'Tº bu lông hơi chính',
     vertical: true,
   },
@@ -111,7 +93,7 @@ const row2 = [
   {
     colSpan: 1,
     rowSpan: 2,
-    title: 'Tº sau tầng cánh số 1',
+    title: 'Tº sau tầng cánh số 1 ',
     vertical: true,
   },
   {
@@ -129,61 +111,43 @@ const row2 = [
   {
     colSpan: 1,
     rowSpan: 2,
-    title: 'P bịt trụ sau',
-    vertical: true,
-  },
-  {
-    colSpan: 1,
-    rowSpan: 2,
     title: 'Tº bịt trục sau',
     vertical: true,
   },
   {
     colSpan: 1,
     rowSpan: 2,
-    title: 'Tº kim loại phía trong thành trên',
+    title: 'Tº phía trong thân trên turbine <br/> tầng cánh số 1',
     vertical: true,
   },
   {
     colSpan: 1,
     rowSpan: 2,
-    title: 'Tº kim loại phía trong thành dưới',
+    title: 'Tº phía trong thân dưới turbine <br/> tầng cánh số 1',
     vertical: true,
   },
   {
     colSpan: 1,
     rowSpan: 2,
-    title: 'Tº phía trong thân trên/trái turbine <br/> tầng cánh số 1',
+    title: 'Tº phía ngoài thân trên turbine <br/> tầng cánh số 1',
     vertical: true,
   },
   {
     colSpan: 1,
     rowSpan: 2,
-    title: 'Tº phía trong thân dưới/phải turbine <br/> tầng cánh số 1',
+    title: 'Tº phía ngoài thân dưới turbine <br/> tầng cánh số 1',
     vertical: true,
   },
   {
     colSpan: 1,
     rowSpan: 2,
-    title: 'Tº phía ngoài thân trên/ trái turbine <br/> tầng cánh số 1',
+    title: 'Tº phía trong thân trên turbine <br/> mặt bích tầng cánh số 1',
     vertical: true,
   },
   {
     colSpan: 1,
     rowSpan: 2,
-    title: 'Tº phía ngoài thân dưới/phải turbine <br/> tầng cánh số 1',
-    vertical: true,
-  },
-  {
-    colSpan: 1,
-    rowSpan: 2,
-    title: 'Tº phía trong thân trên turbine mặt bích <br/> tầng cánh số 1 ',
-    vertical: true,
-  },
-  {
-    colSpan: 1,
-    rowSpan: 2,
-    title: 'Tº phía ngoài thân trên turbine mặt bích <br/> tầng cánh số 1',
+    title: 'Tº phía ngoài thân trên turbine <br/> mặt bích tầng cánh số 1',
     vertical: true,
   },
   {
@@ -204,6 +168,7 @@ const row2 = [
     title: 'Chân không bình ngưng min',
     vertical: true,
   },
+
   {
     colSpan: 2,
     rowSpan: 1,
@@ -305,13 +270,13 @@ const row3 = [
   {
     colSpan: 1,
     rowSpan: 1,
-    title: 'I bơm dầu EH...  ',
+    title: 'I bơm dầu EH 1  ',
     vertical: true,
   },
   {
     colSpan: 1,
     rowSpan: 1,
-    title: 'I bơm dầu EH…',
+    title: 'I bơm dầu EH 2',
     vertical: true,
   },
 
@@ -331,15 +296,10 @@ const row3 = [
   {
     colSpan: 1,
     rowSpan: 1,
-    title: 'I bơm dầu AC... ',
+    title: 'Mức dầu ',
     vertical: true,
   },
-  {
-    colSpan: 1,
-    rowSpan: 1,
-    title: 'Mức dầu',
-    vertical: true,
-  },
+
   {
     colSpan: 1,
     rowSpan: 1,
@@ -392,9 +352,6 @@ const row4 = [
   { title: '%', colSpan: 1 },
   { title: 'MPa', colSpan: 1 },
   { title: 'ºC', colSpan: 1 },
-  { title: 'MPa', colSpan: 1 },
-  { title: 'ºC', colSpan: 1 },
-  { title: 'MPa', colSpan: 1 },
   { title: 'ºC', colSpan: 1 },
   { title: 'ºC', colSpan: 1 },
   { title: 'ºC', colSpan: 1 },
@@ -402,10 +359,7 @@ const row4 = [
   { title: 'ºC', colSpan: 1 },
   { title: 'ºC', colSpan: 1 },
   { title: 'MPa', colSpan: 1 },
-  { title: 'Kpa', colSpan: 1 },
   { title: 'ºC', colSpan: 1 },
-  { title: '', colSpan: 1 },
-  { title: '', colSpan: 1 },
   { title: 'ºC', colSpan: 1 },
   { title: 'ºC', colSpan: 1 },
   { title: 'ºC', colSpan: 1 },
@@ -429,7 +383,6 @@ const row4 = [
   { title: 'A', colSpan: 1 },
   { title: 'MPa', colSpan: 1 },
   { title: 'mm', colSpan: 1 },
-  { title: 'A', colSpan: 1 },
   { title: 'mm', colSpan: 1 },
   { title: 'MPa', colSpan: 1 },
   { title: 'ºC', colSpan: 1 },
@@ -560,7 +513,7 @@ const BM1 = ({ title, apiGet, turbineIndex, apiExportExcel }) => {
             }}
           >
             <colgroup>
-              {Array.from({ length: 53 }).map((_, i) => (
+              {Array.from({ length: 46 }).map((_, i) => (
                 <col key={i} style={{ width: '60px' }} />
               ))}
             </colgroup>

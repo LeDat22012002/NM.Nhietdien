@@ -3,24 +3,24 @@ using Microsoft.EntityFrameworkCore;
 using Server.Models;
 using ClosedXML.Excel;
 using System.Reflection;
+using System.Net.Mime;
 using Microsoft.AspNetCore.Authorization;
-
 namespace Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TB1_BM1Controller : ControllerBase
+    public class NoiHoiKT3_BM1Controller : ControllerBase
     {
         private readonly NMCD2Context _context;
 
-        public TB1_BM1Controller(NMCD2Context context)
+        public NoiHoiKT3_BM1Controller(NMCD2Context context)
         {
             _context = context;
         }
 
-        [HttpGet("getData_TB1_BM1")]
+        [HttpGet("getData_NoiHoiKT3_BM1")]
         [Authorize]
-        public async Task<IActionResult> GetData_TB1_BM1(DateTime? begind, DateTime? endd, string sortOrder = "desc")
+        public async Task<IActionResult> GetData_NoiHoiKT1_BM3(DateTime? begind, DateTime? endd, string sortOrder = "desc")
         {
             // Nếu không truyền thời gian, dùng mặc định là từ hôm qua đến hiện tại
             DateTime defaultEnd = DateTime.Now;
@@ -29,7 +29,7 @@ namespace Server.Controllers
             var start = begind ?? defaultBegin;
             var end = endd ?? defaultEnd;
 
-            var query = _context.Tb1Bm1s
+            var query = _context.BmNhkt3Bm1s
                 .Where(x => x.Time >= start && x.Time <= end);
 
             // Sắp xếp theo thời gian
@@ -39,7 +39,7 @@ namespace Server.Controllers
 
             var data = await query.ToListAsync();
 
-            return Ok(new ApiResponse<List<Tb1Bm1>>
+            return Ok(new ApiResponse<List<BmNhkt3Bm1>>
             {
                 Status = true,
                 Message = "Lấy dữ liệu thành công",
@@ -51,10 +51,10 @@ namespace Server.Controllers
 
         [HttpGet("exportExcel")]
         [Authorize]
-        public IActionResult ExportExcel_TB1_BM1(DateTime? begind, DateTime? endd, int turbineIndex = 1)
+        public IActionResult ExportExcel_NoiHoiKT3_BM1(DateTime? begind, DateTime? endd, int turbineIndex = 1)
         {
             // 1. Lấy dữ liệu từ database
-            var data = _context.Tb1Bm1s
+            var data = _context.BmNhkt3Bm1s
                 .Where(x => x.Time >= begind && x.Time <= endd)
                 .OrderBy(x => x.Time)
                 .ToList();
@@ -63,19 +63,19 @@ namespace Server.Controllers
                 return BadRequest("Không có dữ liệu trong khoảng thời gian được chọn.");
 
 
-            var flatData = new List<TB1_BM1Valiadation>();
+            var flatData = new List<NoiHoiKT_BM1Valiadation>();
             foreach (var item in data)
             {
-                for (int i = 1; i <= 51; i++)
+                for (int i = 1; i <= 56; i++)
                 {
 
-                    var prop = typeof(Tb1Bm1).GetProperty($"Tag{i}");
+                    var prop = typeof(BmNhkt3Bm1).GetProperty($"Tag{i}");
                     if (prop != null)
                     {
                         var value = prop.GetValue(item) as double?;
                         if (value.HasValue)
                         {
-                            flatData.Add(new TB1_BM1Valiadation
+                            flatData.Add(new NoiHoiKT_BM1Valiadation
                             {
                                 Time = item.Time?.Date.AddHours(item.Time.Value.Hour) ?? DateTime.MinValue,
                                 Tag = $"Tag{i}",
@@ -87,20 +87,20 @@ namespace Server.Controllers
             }
 
             // 3. Load template Excel
-            string templatePath = Path.Combine(Directory.GetCurrentDirectory(), "App_Data", "BM.09-QT.05.08 NKVH turbine BM1 01.03.25.xlsx");
+            string templatePath = Path.Combine(Directory.GetCurrentDirectory(), "App_Data", "BM.19 -QT.05.08 Nhat ky van hanh noi hoi khi than BM1_NHKT3.xlsx");
             if (!System.IO.File.Exists(templatePath))
                 return BadRequest("Không tìm thấy file mẫu.");
 
             using var workbook = new XLWorkbook(templatePath);
-            var worksheet = workbook.Worksheet("biểu mẫu 1"); // Sheet name
+            var worksheet = workbook.Worksheet("BM.19"); // Sheet name
             for (int col = 1; col <= 100; col++) // quét từ cột A đến CV (100 cột)
             {
-                var cell = worksheet.Cell(2, col);
+                var cell = worksheet.Cell(3, col);
                 var text = cell.GetString();
 
-                if (!string.IsNullOrWhiteSpace(text) && text.Contains("TURBINE …."))
+                if (!string.IsNullOrWhiteSpace(text) && text.Contains("SỐ...."))
                 {
-                    cell.Value = text.Replace("….", turbineIndex.ToString());
+                    cell.Value = text.Replace("....", turbineIndex.ToString());
                     break;
                 }
             }
@@ -118,7 +118,7 @@ namespace Server.Controllers
                 }
             }
             // dòng bắt đầu đổ dữ liệu 
-            int startRow = 11;
+            int startRow = 9;
             int currentRow = startRow;
 
             // 4. Ghi dữ liệu
@@ -136,8 +136,9 @@ namespace Server.Controllers
                 // Ghi từng Tag
                 for (int col = 2; col <= 100; col++)
                 {
-                    worksheet.Column(col).Width = 10;
-                    var header = worksheet.Cell(9, col).GetString()?.Trim();
+                    worksheet.Column(col).Width = 14;
+                    // Lấy cột Tagname trong Excel
+                    var header = worksheet.Cell(8, col).GetString()?.Trim();
                     if (string.IsNullOrEmpty(header)) continue;
 
                     var tagMatch = group.FirstOrDefault(x =>
@@ -162,7 +163,7 @@ namespace Server.Controllers
             stream.Seek(0, SeekOrigin.Begin);
 
             var content = stream.ToArray();
-            var fileName = $"BM1_TB1_{DateTime.Now:yyyy-MM-dd}.xlsx";
+            var fileName = $"NoiHoiTK3_BM1_{DateTime.Now:yyyy-MM-dd}.xlsx";
 
 
             Response.Headers["Content-Disposition"] = new System.Net.Mime.ContentDisposition
@@ -173,12 +174,8 @@ namespace Server.Controllers
 
 
             return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+
         }
-
-
-        
-
-
 
 
     }
