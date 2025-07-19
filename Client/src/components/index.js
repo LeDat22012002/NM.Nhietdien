@@ -34,6 +34,7 @@ export { default as BM_QHNHND } from './NoiHoi_LocBui/NoiHoiLocBui/BM_QHNHND';
 export { default as NoiHoiKT_BM1 } from './NoiHoi_LocBui/NoiHoi_KT/NoiHoiKT_BM1';
 export { default as NoiHoiKT3_BM1 } from './NoiHoi_LocBui/NoiHoi_KT/NoiHoiKT3_BM1';
 export { default as NoiHoiKT_BM2 } from './NoiHoi_LocBui/NoiHoi_KT/NoiHoiKT_BM2';
+export { default as NoiHoiKT3_BM2 } from './NoiHoi_LocBui/NoiHoi_KT/NoiHoiKT3_BM2';
 
 // CDQ
 export { default as BM1_CDQ } from './NoiHoi_LocBui/NoiHoi_CDQ/BM1_CDQ';

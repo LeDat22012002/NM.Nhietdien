@@ -1,8 +1,10 @@
 import clsx from 'clsx';
 import FilterTime from '../../FilterTime/FilterTime';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import logo from '../../../assets/image/Logo.png';
 import { ImFileExcel } from 'react-icons/im';
+import moment from 'moment';
+import { toast } from 'react-toastify';
 const row1 = [
   { colSpan: 1, title: 'Hạng mục' },
   { colSpan: 1, title: '' },
@@ -98,17 +100,88 @@ const row3 = [
   { colSpan: 1, title: '°C' },
 ];
 
-const BM2_LBKLH = () => {
+const BM2_LBKLH = ({ title, apiGet, apiExportExcel, turbineIndex }) => {
   const [data1, setData1] = useState(null);
 
   const [begind, setBegind] = useState('');
   const [endd, setEndd] = useState('');
+  const fetchData_NoiHoi_LB_BM2 = async () => {
+    const reponse = await apiGet(begind, endd, 'asc');
+    if (reponse?.status) {
+      const data1 = reponse?.data;
 
+      const grouped = {};
+
+      data1.forEach((item) => {
+        const minuteKey = moment(item.time).format('YYYY-MM-DD HH:mm');
+
+        // Gán bản ghi mới nếu chưa có giờ đó
+        grouped[minuteKey] = item; // mỗi giờ sẽ giữ bản ghi cuối cùng (do đang duyệt theo asc)
+      });
+
+      // Chuyển object về mảng
+      const result = Object.entries(grouped).map(([time, value]) => ({
+        thoiGian: time,
+        ...value,
+      }));
+
+      setData1(result);
+    }
+  };
+  const handleExportExcel = async () => {
+    if (!begind || !endd) {
+      toast.warning('Thiếu thời gian!');
+      return;
+    }
+
+    try {
+      const response = await apiExportExcel(begind, endd, turbineIndex);
+
+      //  Đảm bảo response và headers tồn tại
+      if (!response || !response.data) {
+        throw new Error('Không nhận được dữ liệu từ server.');
+      }
+
+      const blob = new Blob([response.data], {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      });
+
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+
+      //  Kiểm tra header tồn tại trước khi đọc
+      let fileName = 'NoiHoi_LB9.xlsx';
+      if (response.headers && response.headers['content-disposition']) {
+        const match =
+          response.headers['content-disposition'].match(/filename="?(.+?)"?$/);
+        if (match && match[1]) {
+          fileName = decodeURIComponent(match[1]);
+        }
+      }
+
+      link.href = url;
+      link.setAttribute('download', fileName);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Lỗi Xuất Excel:', error);
+      toast.error('Không xuất được file!');
+    }
+  };
+
+  const uniqueTagNames = Object.keys(data1?.[0] || {}).filter((key) =>
+    key.startsWith('tag')
+  );
   const handleTG = (begindValue, enddValue) => {
     setBegind(begindValue);
     setEndd(enddValue);
-    // fetchData_NoiHoi_LB(begindValue, enddValue);
+    fetchData_NoiHoi_LB_BM2(begindValue, enddValue);
   };
+  useEffect(() => {
+    fetchData_NoiHoi_LB_BM2();
+  }, []);
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between w-full ">
@@ -121,7 +194,7 @@ const BM2_LBKLH = () => {
         </div>
         <div>
           <button
-            // onClick={handleExportExcel}
+            onClick={handleExportExcel}
             className="px-4 py-2 flex items-center gap-1 text-[14px] text-white font-semibold transition duration-200 bg-green-800 rounded hover:bg-green-900"
           >
             <ImFileExcel />
@@ -133,7 +206,7 @@ const BM2_LBKLH = () => {
         <FilterTime callBackHandle={handleTG} />
       </div>
       <div className="text-center ">
-        {/* <h2 className="text-lg font-bold">{title}</h2> */}
+        <h2 className="text-lg font-bold">{title}</h2>
       </div>
       <div className="max-w-full overflow-x-auto overflow-y-auto border border-gray-300 rounded scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
         <div className="w-[1000px] h-[610px]">
@@ -202,46 +275,29 @@ const BM2_LBKLH = () => {
                   </th>
                 ))}
               </tr>
-
-              {/* <tr>
-                      {row4?.map((col, index) => (
-                        <th
-                          key={index}
-                          colSpan={col?.colSpan}
-                          className={clsx(
-                            'sticky top-[317px] py-1 text-[10px] font-semibold text-center bg-white',
-                            'border border-gray-700 shadow-[inset_0_1px_0_#4b5563]',
-                            index === 0 &&
-                              'left-0 z-[60] shadow-[inset_-1px_0_0_#4b5563] border-r border-gray-700'
-                          )}
-                        >
-                          {col.title}
-                        </th>
-                      ))}
-                    </tr> */}
             </thead>
-            {/* <tbody>
-                {data1?.map((row, index) => (
-                  <tr key={index}>
+            <tbody>
+              {data1?.map((row, index) => (
+                <tr key={index}>
+                  <td
+                    colSpan={1}
+                    className={clsx(
+                      'sticky left-0 z-[40] bg-yellow-400 text-center text-[10px] font-bold h-[40px] min-w-[60px] border border-gray-700'
+                    )}
+                  >
+                    {moment(row?.thoiGian).format('HH:mm')}
+                  </td>
+                  {uniqueTagNames?.map((tagname) => (
                     <td
-                      colSpan={1}
-                      className={clsx(
-                        'sticky left-0 z-[40] bg-yellow-400 text-center text-[10px] font-bold h-[40px] min-w-[60px] border border-gray-700'
-                      )}
+                      key={tagname}
+                      className="border border-gray-700 text-black text-center px-1 py-1 truncate max-w-[60px] overflow-hidden"
                     >
-                      {moment(row?.thoiGian).format('HH:mm')}
+                      {row[tagname]}
                     </td>
-                    {uniqueTagNames?.map((tagname) => (
-                      <td
-                        key={tagname}
-                        className="border border-gray-700 text-black text-center px-1 py-1 truncate max-w-[60px] overflow-hidden"
-                      >
-                        {row[tagname]}
-                      </td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody> */}
+                  ))}
+                </tr>
+              ))}
+            </tbody>
           </table>
         </div>
       </div>

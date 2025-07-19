@@ -9,18 +9,18 @@ namespace Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class NoiHoiKT1_BM2Controller : ControllerBase
+    public class NoiHoi_LB1Controller : ControllerBase
     {
         private readonly NMCD2Context _context;
 
-        public NoiHoiKT1_BM2Controller(NMCD2Context context)
+        public NoiHoi_LB1Controller(NMCD2Context context)
         {
             _context = context;
         }
 
-        [HttpGet("getData_NoiHoiKT1_BM2")]
+        [HttpGet("getData_NoiHoi_LB1")]
         [Authorize]
-        public async Task<IActionResult> GetData_NoiHoiKT1_BM2(DateTime? begind, DateTime? endd, string sortOrder = "desc")
+        public async Task<IActionResult> GetData_NoiHoi_LB1(DateTime? begind, DateTime? endd, string sortOrder = "desc")
         {
             // Nếu không truyền thời gian, dùng mặc định là từ hôm qua đến hiện tại
             DateTime defaultEnd = DateTime.Now;
@@ -29,7 +29,7 @@ namespace Server.Controllers
             var start = begind ?? defaultBegin;
             var end = endd ?? defaultEnd;
 
-            var query = _context.BmNhkt1Bm2s
+            var query = _context.BmLb1s
                 .Where(x => x.Time >= start && x.Time <= end);
 
             // Sắp xếp theo thời gian
@@ -39,7 +39,7 @@ namespace Server.Controllers
 
             var data = await query.ToListAsync();
 
-            return Ok(new ApiResponse<List<BmNhkt1Bm2>>
+            return Ok(new ApiResponse<List<BmLb1>>
             {
                 Status = true,
                 Message = "Lấy dữ liệu thành công",
@@ -51,10 +51,10 @@ namespace Server.Controllers
 
         [HttpGet("exportExcel")]
         [Authorize]
-        public IActionResult ExportExcel_NoiHoiKT1_BM2(DateTime? begind, DateTime? endd, int turbineIndex = 1)
+        public IActionResult ExportExcel_NoiHoi_LB1(DateTime? begind, DateTime? endd, int turbineIndex = 1)
         {
             // 1. Lấy dữ liệu từ database
-            var data = _context.BmNhkt1Bm2s
+            var data = _context.BmLb1s
                 .Where(x => x.Time >= begind && x.Time <= endd)
                 .OrderBy(x => x.Time)
                 .ToList();
@@ -63,19 +63,19 @@ namespace Server.Controllers
                 return BadRequest("Không có dữ liệu trong khoảng thời gian được chọn.");
 
 
-            var flatData = new List<NoiHoiKT_BM2Valiadation>();
+            var flatData = new List<NoiHoi_LBValiadation>();
             foreach (var item in data)
             {
                 for (int i = 1; i <= 51; i++)
                 {
 
-                    var prop = typeof(BmNhkt1Bm2).GetProperty($"Tag{i}");
+                    var prop = typeof(BmLb1).GetProperty($"Tag{i}");
                     if (prop != null)
                     {
                         var value = prop.GetValue(item) as double?;
                         if (value.HasValue)
                         {
-                            flatData.Add(new NoiHoiKT_BM2Valiadation
+                            flatData.Add(new NoiHoi_LBValiadation
                             {
                                 Time = item.Time?.Date.AddHours(item.Time.Value.Hour) ?? DateTime.MinValue,
                                 Tag = $"Tag{i}",
@@ -87,20 +87,20 @@ namespace Server.Controllers
             }
 
             // 3. Load template Excel
-            string templatePath = Path.Combine(Directory.GetCurrentDirectory(), "App_Data", "BM.20-QT.05.08 Nhat ky van hanh noi hoi khi than BM2 25.09.23.xlsx");
+            string templatePath = Path.Combine(Directory.GetCurrentDirectory(), "App_Data", "BM.15-QT.05.08 Nhat ky theo doi van hanh loc bui khu luu huynhBM2_ 25.09.23.xlsx");
             if (!System.IO.File.Exists(templatePath))
                 return BadRequest("Không tìm thấy file mẫu.");
 
             using var workbook = new XLWorkbook(templatePath);
-            var worksheet = workbook.Worksheet("BM20"); // Sheet name
+            var worksheet = workbook.Worksheet("LB"); // Sheet name
             for (int col = 1; col <= 100; col++) // quét từ cột A đến CV (100 cột)
             {
-                var cell = worksheet.Cell(3, col);
+                var cell = worksheet.Cell(4, col);
                 var text = cell.GetString();
 
-                if (!string.IsNullOrWhiteSpace(text) && text.Contains("SỐ...."))
+                if (!string.IsNullOrWhiteSpace(text) && text.Contains("SỐ…….."))
                 {
-                    cell.Value = text.Replace("....", turbineIndex.ToString());
+                    cell.Value = text.Replace("……..", turbineIndex.ToString());
                     break;
                 }
             }
@@ -108,7 +108,7 @@ namespace Server.Controllers
             var today = DateTime.Now;
             for (int col = 1; col <= 100; col++) // dòng 4
             {
-                var cell = worksheet.Cell(4, col);
+                var cell = worksheet.Cell(5, col);
                 var text = cell.GetString();
 
                 if (!string.IsNullOrWhiteSpace(text) && text.Contains("Ngày"))
@@ -163,7 +163,7 @@ namespace Server.Controllers
             stream.Seek(0, SeekOrigin.Begin);
 
             var content = stream.ToArray();
-            var fileName = $"NoiHoiTK1_BM2_{DateTime.Now:yyyy-MM-dd}.xlsx";
+            var fileName = $"NoiHoi_LB1_{DateTime.Now:yyyy-MM-dd}.xlsx";
 
 
             Response.Headers["Content-Disposition"] = new System.Net.Mime.ContentDisposition
